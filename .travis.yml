@@ -25,4 +25,4 @@ deploy:
   app: graceshopper-pasha-mel-jay # see README
   api_key:
     # how do we make this into JS?
-    secure: ${process.env.APP_SECRET} # see README
+    secure: "qr4CrT4x40vEs3QPmDbNBOpn91H5/ZGcumdhEMp3K1LE+MJd98fWX0TWHXM9h1ExAufH8+csDlg2XyBOvfU5k8EkTiLKtfSy5a5MiAf/l8EMaNKEKq9bdv/DqHB4i7yi8TYRiTOqagocujBFa+iSJzZvpOumO/G6rrW3gd3vvhfQ9QqMWkvu5oX/TmJS8QEciqWMUnc81z7RNmxOZ57qNtqcCuAPtpzfYvyaDtDKCmUUIJ28nmQsh0T7xoRjLY0WzobGDKGfgVOr1U+6HWTj9Byn1rpS8sBPrqdWMS4MfYxNyUeQWagUqMP8GAxlFApJOkW1EpUj6WmLoZ9V+XnTbep5XRgOjGQPzHUQ6T6XAAe6JuejE7qoerSTPeFRFP8VJ/KkXXNzMkf1jXjGE/CUngx4TX736MDEPlCIBqVWhfJBpYlPSS78AkX11Mvd3L8jK/PlCWBeHPZxFR4K2+vbB4pJvvYZIT8yESsCAwE/FTDB9NYjzA06lg1QEOBLBbmWwTZEt7gGQIlTHOp7AFQeuK/paZMqtYZ1a1Sb+u2sFQasjt9prF8i1Ae3hx9BTYOscuulxpsVWKo9AbIjkzg3RCpUZLAQkxfrzgJckRTJrqKnGPmxnAtG1kABSiBYMsG/PN9ccHEXZqi/g7eu+92mVYZgcSyUNofI3jLFKPyLjMU=" # see README
