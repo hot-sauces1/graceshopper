@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const ActiveOrder = db.define('activeOrders', {
+const Order = db.define('orders', {
   sessionId: {
     type: Sequelize.STRING,
     allowNull: false
@@ -13,7 +13,11 @@ const ActiveOrder = db.define('activeOrders', {
     type: Sequelize.FLOAT,
     allowNull: false,
     defaultValue: 0.0
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   }
 })
 
-module.exports = ActiveOrder
+module.exports = Order
