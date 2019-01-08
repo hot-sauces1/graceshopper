@@ -13,7 +13,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <App />
-      <p>Hello World</p>
     </Router>
   </Provider>,
   document.getElementById('app')
