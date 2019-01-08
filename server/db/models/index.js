@@ -1,19 +1,17 @@
 const User = require('./user')
 const Product = require('./product')
 const OrderItem = require('./orderItem')
-const ActiveOrder = require('./activeOrder')
-const PastOrder = require('./pastOrder')
+const Order = require('./order')
 
-User.hasOne(ActiveOrder)
-ActiveOrder.belongsTo(User)
+User.hasMany(Order)
+Order.belongsTo(User)
 
-ActiveOrder.hasMany(OrderItem)
-OrderItem.belongsTo(ActiveOrder)
+Order.hasMany(OrderItem)
+OrderItem.belongsTo(Order)
 
 module.exports = {
   User,
   Product,
   OrderItem,
-  ActiveOrder,
-  PastOrder
+  Order
 }
