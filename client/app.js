@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <p>Jay is a great teammate</p>
+      <p>Pasha and Melanie and Andre is a great teammate</p>
       <Routes />
     </div>
   )
