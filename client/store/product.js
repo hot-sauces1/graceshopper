@@ -4,9 +4,9 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS'
-const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
-// const REMOVE_USER = 'REMOVE_USER'
+const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
+const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
+// const REMOVE_USER = 'REMOVE_USER’
 
 /**
  * INITIAL STATE
@@ -16,38 +16,32 @@ const initialState = {products: [], singleProduct: {}}
 /**
  * ACTION CREATORS
  */
-const getAllProducts = allProducts => ({type: GET_ALL_PRODUCTS, allProducts})
-const getSingleProduct = singleProduct => ({
-  type: GET_SINGLE_PRODUCT,
+const gotAllProducts = allProducts => ({
+  type: GOT_ALL_PRODUCTS,
+  allProducts
+})
+
+const gotSingleProduct = singleProduct => ({
+  type: GOT_SINGLE_PRODUCT,
   singleProduct
 })
 
 /**
  * THUNK CREATORS
  */
-export const gettingAllProducts = () => async dispatch => {
+export const getAllProducts = () => async dispatch => {
   try {
     const {data: allProducts} = await axios.get('/api/product')
-    dispatch(getAllProducts(allProducts))
+    dispatch(gotAllProducts(allProducts))
   } catch (err) {
     console.error(err)
   }
 }
 
-export const gettingProductById = productId => async dispatch => {
+export const getProductById = productId => async dispatch => {
   try {
     const {data: singleProduct} = await axios.get(`/api/product/${productId}`)
-    dispatch(getSingleProduct(singleProduct))
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-export const logout = () => async dispatch => {
-  try {
-    await axios.post('/auth/logout')
-    dispatch(removeUser())
-    history.push('/login')
+    dispatch(gotSingleProduct(singleProduct))
   } catch (err) {
     console.error(err)
   }
@@ -56,12 +50,18 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_USER:
-      return action.user
-    case REMOVE_USER:
-      return defaultUser
+    case GOT_ALL_PRODUCTS:
+      return {
+        ...state,
+        products: action.allProducts
+      }
+    case GOT_SINGLE_PRODUCT:
+      return {
+        ...state,
+        singleProduct: action.singleProduct
+      }
     default:
       return state
   }
