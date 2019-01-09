@@ -692,16 +692,16 @@ class AllProducts extends Component {
   }
   async componentDidMount() {
     try {
-      const products = await this.props.fetchProducts()
-      this.setState({products})
+      await this.props.fetchProducts()
+      this.setState({products: this.props.products})
     } catch (err) {
       console.error(err)
     }
   }
   render() {
-    console.log('current props :: ', this.props.products)
+    console.log('current state :: ', this.state)
     // const {products} = this.props
-    const {products} = this.props
+    const {products} = this.state
     return (
       <div>
         <h1>Buy our products!</h1>
