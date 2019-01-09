@@ -11,22 +11,28 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
-    const codysEmail = 'cody@puppybook.com'
+  describe('/api/user/:id', () => {
+    const testUser = {
+      firstName: 'Perle',
+      lastName: 'Longstreeth',
+      email: 'plongstreeth0@jugem.jp',
+      address: '309 Dawn Point',
+      isAdmin: false,
+      isGuest: true,
+      password: 'WKqjUdalxjR2'
+    }
 
     beforeEach(() => {
-      return User.create({
-        email: codysEmail
-      })
+      return User.create(testUser)
     })
 
-    it('GET /api/users', async () => {
+    it('GET /api/user/:id', async () => {
       const res = await request(app)
-        .get('/api/users')
+        .get('/api/user/1')
         .expect(200)
 
-      expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(codysEmail)
+      expect(res.body).to.be.an('object')
+      expect(res.body.email).to.be.equal(testUser.email)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
