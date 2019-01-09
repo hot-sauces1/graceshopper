@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+
+import {getAllProducts} from '../store/product'
 
 const tableData = [
   {
@@ -679,12 +682,26 @@ const tableData = [
 class AllProducts extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      products: []
+    }
     this.handleClick = this.handleClick.bind(this)
   }
   handleClick(id) {
     return this.props.history.push(`/products/${id}`)
   }
+  async componentDidMount() {
+    try {
+      const products = await this.props.fetchProducts()
+      this.setState({products})
+    } catch (err) {
+      console.error(err)
+    }
+  }
   render() {
+    console.log('current props :: ', this.props.products)
+    // const {products} = this.props
+    const {products} = this.props
     return (
       <div>
         <h1>Buy our products!</h1>
@@ -698,20 +715,20 @@ class AllProducts extends Component {
             </tr>
           </thead>
           <tbody>
-            {tableData.map(val => {
+            {products.map(val => {
               return (
                 <tr key={val.id}>
                   <td onClick={() => this.handleClick(val.id)}>{val.id}</td>
                   <td>
                     <img
                       src={val.image}
-                      alt={val.title}
+                      alt={val.name}
                       width="20px"
                       height="20px"
                       onClick={() => this.handleClick(val.id)}
                     />
                   </td>
-                  <td onClick={() => this.handleClick(val.id)}>{val.title}</td>
+                  <td onClick={() => this.handleClick(val.id)}>{val.name}</td>
                   <td onClick={() => this.handleClick(val.id)}>{val.price}</td>
                 </tr>
               )
@@ -723,4 +740,12 @@ class AllProducts extends Component {
   }
 }
 
-export default AllProducts
+const mapStateToProps = state => ({
+  products: state.product.products
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: () => dispatch(getAllProducts())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
