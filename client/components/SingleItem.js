@@ -8,6 +8,14 @@ class SingleItem extends Component {
     await this.props.fetchSingleProduct(this.props.match.params.id)
   }
 
+  // handleSubmit(id) {
+  //   return () =>{
+  //     event.preventDefault();
+  //     this.props.(id)
+  //     //FINISHING ADDING THIS!!
+  //   }
+  // }
+
   render() {
     const {singleProduct} = this.props
     return (
@@ -16,7 +24,7 @@ class SingleItem extends Component {
         <img src={singleProduct.image} alt="Ye and Dave Chappelle" />
         <h3>${singleProduct.price}</h3>
         <p>{singleProduct.description}</p>
-        <button onClick={() => alert('YEEZUS JUST ROSE, AGAIN!!!')}>
+        <button type="submit" onClick={() => this.handleSubmit(this.props.id)}>
           Add To Cart
         </button>
       </div>

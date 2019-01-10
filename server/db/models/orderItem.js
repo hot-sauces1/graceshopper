@@ -13,7 +13,7 @@ const OrderItem = db.define('orderItems', {
     allowNull: false
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   image: {

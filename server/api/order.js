@@ -4,15 +4,19 @@ const {OrderItem} = require('../db/models')
 module.exports = router
 
 // /api/order
-router.post('/cart', async (req, res, next) => {
+router.post('/cart/:userId', async (req, res, next) => {
   try {
     //wondering should we be adding the sessionId to the route in the url and pulling from there
-    const addToCart = await Order.create({
+    const addToCart = await OrderItem.create({
       //do we need to set-up the ability to do cookies
-      sessionId: req.body.sessionId,
-      userId: req.body.userId,
-      total: req.body.total
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      image: req.body.iamge,
+      quantity: req.body.quantity,
+      userId: req.params.userId
     })
+
     res.send(addToCart)
   } catch (error) {
     next(error)
@@ -22,7 +26,7 @@ router.post('/cart', async (req, res, next) => {
 //make considerations for adding userId into this route
 router.delete('/cart/:id', async (req, res, next) => {
   try {
-    await Order.destroy({
+    await OrderItem.destroy({
       where: {
         id: req.params.id
       }
@@ -37,7 +41,7 @@ router.delete('/cart/:id', async (req, res, next) => {
 router.put('/cart/:id', async (req, res, next) => {
   try {
     //let's think of a better way to capture id --> maybe might have to be itemId
-    const updateItem = await Order.findById(req.params.id)
+    const updateItem = await OrderItem.findById(req.params.id)
     const updateAction = await updateItem.update(req.body)
     res.status(200).send('Successfully updated cart!', updateAction)
   } catch (error) {
