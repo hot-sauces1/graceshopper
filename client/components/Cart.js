@@ -9,8 +9,8 @@ class Cart extends Component {
     super(props)
     // this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {
-    this.props.getCart()
+  async componentDidMount() {
+    await this.props.getCart(this.props.match.params.id)
   }
   // handleSubmit(id) {
   //   return () =>{
@@ -21,9 +21,47 @@ class Cart extends Component {
   // }
 
   render() {
+    this.props.cart.orderItems = this.props.cart.orderItems || []
+    // console.log("PROPS", this.props.cart.orderItems)
     return (
       <div>
-        <CartItems cart={this.props.cart} />
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.cart.orderItems.map(val => {
+              return (
+                <tr key={val.id}>
+                  <td>{val.quantity}</td>
+                  <td>
+                    <img
+                      src={val.image}
+                      alt={val.name}
+                      width="50px"
+                      height="50px"
+                    />
+                  </td>
+                  <td>{val.name}</td>
+                  <td>{val.price}</td>
+                  <td>
+                    Total{' '}
+                    {/* {`$${(
+                      val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))
+                    ).toFixed(2)}`} */}
+                    {val.price}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
         <button onClick={this.handleSubmit}>Update</button>
       </div>
     )
@@ -31,7 +69,6 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('STATE', state)
   return {
     cart: state.order.cart
   }
@@ -39,7 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: () => dispatch(getCart())
+    getCart: userId => dispatch(getCart(userId))
   }
 }
 
