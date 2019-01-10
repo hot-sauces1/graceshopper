@@ -1,45 +1,52 @@
 import React, {Component} from 'react'
 import CartItems from './CartItems'
 import {connect} from 'react-redux'
-import {gotCart, getCart} from '../store/order'
+import {getCart, removeItem, updateItem} from '../store/order'
 import {withRouter} from 'react-router'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
-    // this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    // this.delete = this.delete.bind(this)
   }
   async componentDidMount() {
     await this.props.getCart(this.props.match.params.id)
   }
-  // handleSubmit(id) {
-  //   return () =>{
-  //     event.preventDefault();
-  //     this.props.(id)
-  //     //FINISHING ADDING THIS!!
-  //   }
-  // }
+
+  handleClick(item) {
+    return () => {
+      event.preventDefault()
+      this.props.removeItem(item)
+    }
+  }
+
+  handleSubmit(item) {
+    return () => {
+      event.preventDefault()
+      this.props.updateItem(item)
+    }
+  }
 
   render() {
     this.props.cart.orderItems = this.props.cart.orderItems || []
-    // console.log("PROPS", this.props.cart.orderItems)
+    console.log('PROPS', this.props)
     return (
       <div>
         <table>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Image</th>
               <th>Name</th>
               <th>Price</th>
               <th>Total Price</th>
+              <th>Quantity</th>
             </tr>
           </thead>
           <tbody>
             {this.props.cart.orderItems.map(val => {
               return (
                 <tr key={val.id}>
-                  <td>{val.quantity}</td>
                   <td>
                     <img
                       src={val.image}
@@ -57,12 +64,26 @@ class Cart extends Component {
                     ).toFixed(2)}`} */}
                     {val.price}
                   </td>
+                  <td>
+                    <input type="text" placeholder={val.quantity} />
+                  </td>
+                  <td>
+                    {' '}
+                    <button type="button" onClick={this.handleSubmit(val.id)}>
+                      Update
+                    </button>
+                  </td>
+                  <td>
+                    {' '}
+                    <button type="button" onClick={this.handleClick(val.id)}>
+                      &times;
+                    </button>
+                  </td>
                 </tr>
               )
             })}
           </tbody>
         </table>
-        <button onClick={this.handleSubmit}>Update</button>
       </div>
     )
   }
@@ -76,7 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: userId => dispatch(getCart(userId))
+    getCart: userId => dispatch(getCart(userId)),
+    updateItem: id => dispatch(updateItem(id)),
+    removeItem: id => dispatch(id)
   }
 }
 
