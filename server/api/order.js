@@ -12,9 +12,10 @@ router.post('/cart/:userId', async (req, res, next) => {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      image: req.body.iamge,
+      image: req.body.image,
       quantity: req.body.quantity,
-      userId: req.params.userId
+      userId: req.params.userId,
+      orderId: req.body.orderId
     })
 
     res.send(addToCart)
@@ -49,10 +50,13 @@ router.put('/cart/:id', async (req, res, next) => {
   }
 })
 
-router.get('/cart', async (req, res, next) => {
+router.get('/cart/:id', async (req, res, next) => {
   try {
     const activeOrder = await Order.findOne({
-      where: {isActive: true},
+      where: {
+        isActive: true,
+        userId: req.params.id
+      },
       include: [OrderItem]
     })
     res.json(activeOrder)
