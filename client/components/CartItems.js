@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
+import {gotCart, getCart} from '../store/order'
 
 class CartItems extends Component {
   constructor(props) {
     super(props)
   }
+  async componentDidMount() {
+    await this.props.getCart(this.props.match.params.id)
+  }
 
   render() {
-    console.log('HEREs PROPS', this.props)
+    console.log('HEREs PROPS', this.props.cart)
     return (
       <table>
         <thead>
