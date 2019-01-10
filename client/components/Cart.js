@@ -9,8 +9,8 @@ class Cart extends Component {
     super(props)
     // this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {
-    this.props.getCart()
+  async componentDidMount() {
+    await this.props.getCart(this.props.match.params.id)
   }
   // handleSubmit(id) {
   //   return () =>{

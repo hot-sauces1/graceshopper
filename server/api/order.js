@@ -12,7 +12,7 @@ router.post('/cart/:userId', async (req, res, next) => {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      image: req.body.iamge,
+      image: req.body.image,
       quantity: req.body.quantity,
       userId: req.params.userId
     })
