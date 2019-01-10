@@ -7,19 +7,24 @@ import {withRouter} from 'react-router'
 class Cart extends Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    // this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
     this.props.getCart()
   }
-  handleSubmit(evt) {
-    console.log('Yoohoo', evt.target.id)
-  }
+  // handleSubmit(id) {
+  //   return () =>{
+  //     event.preventDefault();
+  //     this.props.(id)
+  //     //FINISHING ADDING THIS!!
+  //   }
+  // }
+
   render() {
     return (
       <div>
-        <CartItems />
-        <button onClick={this.handleSubmit}>Change my cart</button>
+        <CartItems cart={this.props.cart} />
+        <button onClick={this.handleSubmit}>Update</button>
       </div>
     )
   }
