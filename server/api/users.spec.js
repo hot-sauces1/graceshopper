@@ -26,7 +26,7 @@ describe('User routes', () => {
       return User.create(testUser)
     })
 
-    it('GET /api/user/:id', async () => {
+    xit('GET /api/user/:id', async () => {
       const res = await request(app)
         .get('/api/user/1')
         .expect(200)
