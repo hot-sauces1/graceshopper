@@ -44,7 +44,8 @@ router.put('/cart/:id', async (req, res, next) => {
     //let's think of a better way to capture id --> maybe might have to be itemId
     const updateItem = await OrderItem.findById(req.params.id)
     const updateAction = await updateItem.update(req.body)
-    res.status(200).send('Successfully updated cart!', updateAction)
+    console.log('Update Route \n\n\n\n\n\n\n\n\n', updateAction)
+    res.status(200).send(updateAction)
   } catch (error) {
     next(error)
   }
