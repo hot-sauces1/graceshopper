@@ -1,23 +1,28 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
-const {OrderItem} = require('../db/models')
+const {Order, Product} = require('../db/models')
 module.exports = router
 
 // /api/order
-router.post('/cart/:userId', async (req, res, next) => {
+router.post('/cart', async (req, res, next) => {
   try {
     //wondering should we be adding the sessionId to the route in the url and pulling from there
-    const addToCart = await OrderItem.create({
-      //do we need to set-up the ability to do cookies
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      image: req.body.image,
-      quantity: req.body.quantity,
-      userId: req.params.userId,
-      orderId: req.body.orderId
-    })
 
+    let addToCart
+    if (req.session.passport.user) {
+      addToCart = await Order.findOrCreate({
+        where: {
+          isActive: true,
+          userId: req.session.passport.user
+        }
+      }).addProduct(req.body.id)
+    } else {
+      addToCart = await Order.findOrCreate({
+        where: {
+          isActive: true,
+          sessionId: req.sessionid
+        }
+      }).addProduct(req.body.id)
+    }
     res.send(addToCart)
   } catch (error) {
     next(error)
@@ -25,50 +30,65 @@ router.post('/cart/:userId', async (req, res, next) => {
 })
 
 //make considerations for adding userId into this route
-router.delete('/cart/:id', async (req, res, next) => {
+router.delete('/cart', async (req, res, next) => {
   try {
-    await OrderItem.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
+    let removeToCart
+    if (req.body.userId) {
+      removeToCart = await Order.findOne({
+        where: {
+          isActive: true,
+          userId: req.body.userId
+        }
+      }).removeProduct(req.body.id)
+    } else {
+      removeToCart = await Order.findOne({
+        where: {
+          isActive: true,
+          sessionId: req.session.id
+        }
+      }).removeProduct(req.body.id)
+    }
     res.status(204).end()
   } catch (error) {
     next(error)
   }
 })
 
-//make considerations for adding userId into this route
-router.put('/cart/:id', async (req, res, next) => {
+router.get('/cart', async (req, res, next) => {
   try {
-    //let's think of a better way to capture id --> maybe might have to be itemId
-    const updateItem = await OrderItem.findById(req.params.id)
-    const updateAction = await updateItem.update(req.body)
-    res.status(200).send('Successfully updated cart!', updateAction)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/cart/:id', async (req, res, next) => {
-  try {
-    const activeOrder = await Order.findOne({
-      where: {
-        isActive: true,
-        userId: req.params.id
-      },
-      include: [OrderItem]
-    })
+    let activeOrder
+    if (req.body.userId) {
+      activeOrder = await Order.findOne({
+        where: {
+          isActive: true,
+          userId: req.body.userId
+        }
+      })
+    } else {
+      activeOrder = await Order.findOne({
+        where: {
+          isActive: true,
+          sessionId: req.session.id
+        }
+      })
+    }
     res.json(activeOrder)
   } catch (err) {
     next(err)
   }
 })
-router.get('/:id', async (req, res, next) => {
+
+router.get('/', async (req, res, next) => {
   try {
-    const singleOrder = await Order.findById(req.params.id, {
-      include: [OrderItem]
-    })
+    const singleOrder = await Order.findById(
+      {
+        where: {
+          userId: req.body.userId,
+          id: req.body.id
+        }
+      },
+      {include: [Product]}
+    )
     res.json(singleOrder)
   } catch (err) {
     next(err)
@@ -77,7 +97,12 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const allOrders = await Order.findAll()
+    const allOrders = await Order.findAll(
+      {
+        where: {userId: req.body.userId}
+      },
+      {include: [Product]}
+    )
     res.json(allOrders)
   } catch (err) {
     next(err)

@@ -16,7 +16,9 @@ const CLEAR_CART = 'CLEAR_CART'
 /**
  * INITIAL STATE
  */
-const initialState = {orders: [], singleOrder: {}, cart: []}
+
+//change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
+const initialState = {orders: [], singleOrder: {}, cart: {}}
 
 /**
  * ACTION CREATORS
@@ -88,7 +90,7 @@ export const getCart = userId => async dispatch => {
 export const addItem = (userId, item) => async dispatch => {
   try {
     //clear whether this is item or itemId
-    const {data} = await axios.post(`api/order/cart/${userId}`, item)
+    const {data} = await axios.post(`/api/order/cart/${userId}`, item)
     dispatch(addItemToCart(data))
   } catch (error) {
     console.error(error)
@@ -98,7 +100,7 @@ export const addItem = (userId, item) => async dispatch => {
 export const removeItem = (userId, itemId) => async dispatch => {
   try {
     //delete from db
-    await axios.delete(`api/order/cart/${userId}/${itemId}`)
+    await axios.delete(`/api/order/cart/${userId}/${itemId}`)
     //delete on frontend
     dispatch(removeItemFromCart(itemId))
   } catch (error) {
@@ -108,7 +110,7 @@ export const removeItem = (userId, itemId) => async dispatch => {
 
 export const updateItem = (userId, item) => async dispatch => {
   try {
-    const {data} = await axios.put(`api/order/cart/${userId}`, item)
+    const {data} = await axios.put(`/api/order/cart/${userId}`, item)
     dispatch(updateItemFromCart(data))
   } catch (error) {
     console.error(error)
@@ -146,11 +148,16 @@ export default function(state = initialState, action) {
         cart: state.cart.filter(item => item.id !== action.itemId)
       }
     case UPDATE_ITEM_IN_CART:
+      console.log('ACTION', action.item)
+      console.log('STATE IN REDUCER \n\n\n\n\n', state)
+      console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems)
       return {
         ...state,
-        cart: state.cart.map(
-          item => (action.item.id === item.id ? action.item : item)
-        )
+        cart: {
+          orderItems: state.cart.orderItems.map(
+            item => (action.item.id === item.id ? action.item : item)
+          )
+        }
       }
     default:
       return state
