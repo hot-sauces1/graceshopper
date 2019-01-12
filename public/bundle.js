@@ -298,9 +298,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var _CartItems = _interopRequireDefault(__webpack_require__(/*! ./CartItems */ "./client/components/CartItems.js"));
-
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _CartItems = _interopRequireDefault(__webpack_require__(/*! ./CartItems */ "./client/components/CartItems.js"));
 
 var _order = __webpack_require__(/*! ../store/order */ "./client/store/order.js");
 
@@ -343,7 +345,13 @@ function (_Component) {
     _classCallCheck(this, Cart);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.delete = this.delete.bind(this)
+    _this.state = {
+      cart: {}
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.handleOnChange = this.handleOnChange.bind(this)
+    // this.delete = this.delete.bind(this)
+
+    _this.increase = _this.increase.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.decrease = this.decrease.bind(this)
 
     return _this;
   }
@@ -362,6 +370,11 @@ function (_Component) {
                 return this.props.getCart(this.props.match.params.id);
 
               case 2:
+                this.setState({
+                  cart: this.props.cart
+                });
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -374,6 +387,15 @@ function (_Component) {
       };
     }()
   }, {
+    key: "increase",
+    value: function increase(num, evt) {
+      console.log('EVT', evt);
+      (0, _order.updateItem)(num, evt);
+    }
+  }, {
+    key: "decrease",
+    value: function decrease(prodId) {}
+  }, {
     key: "handleClick",
     value: function handleClick(item) {
       var _this2 = this;
@@ -383,6 +405,11 @@ function (_Component) {
 
         _this2.props.removeItem(item);
       };
+    }
+  }, {
+    key: "handleOnChange",
+    value: function handleOnChange(evt) {
+      console.log('That thing', evt.target.value);
     }
   }, {
     key: "handleSubmit",
@@ -402,7 +429,8 @@ function (_Component) {
 
       this.props.cart.orderItems = this.props.cart.orderItems || [];
       console.log('PROPS', this.props);
-      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val) {
+      console.log('STATE', this.state.cart);
+      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val, inx) {
         return _react.default.createElement("tr", {
           key: val.id
         }, _react.default.createElement("td", null, _react.default.createElement("img", {
@@ -412,15 +440,37 @@ function (_Component) {
           height: "50px"
         })), _react.default.createElement("td", null, val.name), _react.default.createElement("td", null, val.price), _react.default.createElement("td", null, "Total", ' ', val.price), _react.default.createElement("td", null, _react.default.createElement("input", {
           type: "text",
+          onChange: _this4.handleOnChange,
           placeholder: val.quantity
         })), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
           type: "button",
-          onClick: _this4.handleSubmit(val.id)
-        }, "Update")), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            return _this4.setState({
+              cart: {
+                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
+                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+                })
+              }
+            });
+          }
+        }, "+"), _react.default.createElement("button", {
+          type: "button",
+          onClick: function onClick() {
+            return _this4.setState({
+              cart: {
+                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
+                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+                })
+              }
+            });
+          }
+        }, "-")), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
           type: "button",
           onClick: _this4.handleClick(val.id)
         }, "\xD7")));
-      }))));
+      }))), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/checkout"
+      }, "Checkout"));
     }
   }]);
 
@@ -906,7 +956,9 @@ var Navbar = function Navbar(_ref) {
   }, "Cart")), isLoggedIn ? _react.default.createElement("div", null, _react.default.createElement("a", {
     href: "#",
     onClick: handleClick
-  }, "Logout")) : _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+  }, "Logout"), _react.default.createElement(_reactRouterDom.Link, {
+    to: "/order-history"
+  }, "Order History")) : _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
     to: "/login"
   }, "Login"), _react.default.createElement(_reactRouterDom.Link, {
     to: "/signup"
@@ -1176,6 +1228,14 @@ function (_Component) {
         exact: true,
         path: "/cart/:id",
         component: _components.Cart
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/order-history",
+        component: _components.OrderHistory
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/checkout",
+        component: _components.Checkout
       })));
     }
   }]);
@@ -1358,11 +1418,12 @@ var CLEAR_CART = 'CLEAR_CART'; // const REMOVE_USER = 'REMOVE_USER’
 /**
  * INITIAL STATE
  */
+//change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
 
 var initialState = {
   orders: [],
   singleOrder: {},
-  cart: []
+  cart: {}
   /**
    * ACTION CREATORS
    */
@@ -1574,7 +1635,7 @@ var addItem = function addItem(userId, item) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return _axios.default.post("api/order/cart/".concat(userId), item);
+                return _axios.default.post("/api/order/cart/".concat(userId), item);
 
               case 3:
                 _ref8 = _context4.sent;
@@ -1618,7 +1679,7 @@ var removeItem = function removeItem(userId, itemId) {
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return _axios.default.delete("api/order/cart/".concat(userId, "/").concat(itemId));
+                return _axios.default.delete("/api/order/cart/".concat(userId, "/").concat(itemId));
 
               case 3:
                 //delete on frontend
@@ -1663,7 +1724,7 @@ var updateItem = function updateItem(userId, item) {
               case 0:
                 _context6.prev = 0;
                 _context6.next = 3;
-                return _axios.default.put("api/order/cart/".concat(userId), item);
+                return _axios.default.put("/api/order/cart/".concat(userId), item);
 
               case 3:
                 _ref11 = _context6.sent;
@@ -1731,10 +1792,15 @@ function _default() {
       });
 
     case UPDATE_ITEM_IN_CART:
+      console.log('ACTION', action.item);
+      console.log('STATE IN REDUCER \n\n\n\n\n', state);
+      console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems);
       return _objectSpread({}, state, {
-        cart: state.cart.map(function (item) {
-          return action.item.id === item.id ? action.item : item;
-        })
+        cart: {
+          orderItems: state.cart.orderItems.map(function (item) {
+            return action.item.id === item.id ? action.item : item;
+          })
+        }
       });
 
     default:

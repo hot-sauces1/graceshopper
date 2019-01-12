@@ -21,6 +21,10 @@ const Product = db.define('products', {
     validate: {
       isUrl: true
     }
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1000
   }
 })
 
