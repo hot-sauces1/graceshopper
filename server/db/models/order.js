@@ -10,8 +10,7 @@ const Order = db.define('orders', {
   },
   total: {
     //before final commits please revist this topic per pascha re:  price integer and moving to penny system
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.INTEGER
   },
   isActive: {
     type: Sequelize.BOOLEAN,

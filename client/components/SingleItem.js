@@ -5,13 +5,17 @@ import {getProductById} from '../store/product'
 import {addItem} from '../store/order'
 
 class SingleItem extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   async componentDidMount() {
     await this.props.fetchSingleProduct(this.props.match.params.id)
   }
 
   handleSubmit(evt) {
-    console.log('evt', evt)
-    addItem(evt.singleProduct.id)
+    console.log('evt', evt, addItem)
+    this.props.addItem(evt.singleProduct.id)
     //FINISHING ADDING THIS!!
   }
 
