@@ -18,7 +18,7 @@ router.put('/', async (req, res, next) => {
       checkedOut = await Order.findAll({
         where: {
           isActive: true,
-          sessionId: req.session.id
+          sessionId: req.sessionID
         }
       })
     }
