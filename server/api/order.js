@@ -39,7 +39,8 @@ router.delete('/cart', async (req, res, next) => {
           isActive: true,
           userId: req.body.userId
         }
-      }).removeProduct(req.body.id)
+      })
+      await removeToCart.removeProduct(req.body.id)
     } else {
       removeToCart = await Order.findOne({
         where: {
