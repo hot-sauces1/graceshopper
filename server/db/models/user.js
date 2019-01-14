@@ -48,7 +48,7 @@ const User = db.define('user', {
     }
   },
   googleId: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   }
 })
 

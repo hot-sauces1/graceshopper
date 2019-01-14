@@ -628,6 +628,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _product = __webpack_require__(/*! ../store/product */ "./client/store/product.js");
 
+var _order = __webpack_require__(/*! ../store/order */ "./client/store/order.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -687,14 +689,13 @@ function (_Component) {
       return function componentDidMount() {
         return _componentDidMount.apply(this, arguments);
       };
-    }() // handleSubmit(id) {
-    //   return () =>{
-    //     event.preventDefault();
-    //     this.props.(id)
-    //     //FINISHING ADDING THIS!!
-    //   }
-    // }
-
+    }()
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(evt) {
+      console.log("evt", evt);
+      (0, _order.addItem)(evt.singleProduct.id); //FINISHING ADDING THIS!!
+    }
   }, {
     key: "render",
     value: function render() {
@@ -707,7 +708,7 @@ function (_Component) {
       }), _react.default.createElement("h3", null, "$", singleProduct.price), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
         type: "submit",
         onClick: function onClick() {
-          return _this.handleSubmit(_this.props.id);
+          return _this.handleSubmit(_this.props);
         }
       }, "Add To Cart"));
     }
@@ -726,6 +727,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchSingleProduct: function fetchSingleProduct(id) {
       return dispatch((0, _product.getProductById)(id));
+    },
+    addItem: function addItem(id) {
+      return dispatch((0, _order.addItem)(id));
     }
   };
 };

@@ -2,19 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {getProductById} from '../store/product'
+import {addItem} from '../store/order'
 
 class SingleItem extends Component {
   async componentDidMount() {
     await this.props.fetchSingleProduct(this.props.match.params.id)
   }
 
-  // handleSubmit(id) {
-  //   return () =>{
-  //     event.preventDefault();
-  //     this.props.(id)
-  //     //FINISHING ADDING THIS!!
-  //   }
-  // }
+  handleSubmit(evt) {
+    console.log('evt', evt)
+    addItem(evt.singleProduct.id)
+    //FINISHING ADDING THIS!!
+  }
 
   render() {
     const {singleProduct} = this.props
@@ -24,7 +23,7 @@ class SingleItem extends Component {
         <img src={singleProduct.image} alt="Ye and Dave Chappelle" />
         <h3>${singleProduct.price}</h3>
         <p>{singleProduct.description}</p>
-        <button type="submit" onClick={() => this.handleSubmit(this.props.id)}>
+        <button type="submit" onClick={() => this.handleSubmit(this.props)}>
           Add To Cart
         </button>
       </div>
@@ -36,8 +35,11 @@ const mapStateToProps = state => ({
   singleProduct: state.product.singleProduct
 })
 
-const mapDispatchToProps = dispatch => ({
-  fetchSingleProduct: id => dispatch(getProductById(id))
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchSingleProduct: id => dispatch(getProductById(id)),
+    addItem: id => dispatch(addItem(id))
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleItem)
