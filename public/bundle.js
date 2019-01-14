@@ -1636,7 +1636,7 @@ var addItem = function addItem(item) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log("ITEM", item);
+                console.log('ITEM', item);
                 _context4.prev = 1;
                 _context4.next = 4;
                 return _axios.default.post("/api/user/cart", item);
