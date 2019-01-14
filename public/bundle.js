@@ -427,9 +427,8 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      console.log("CART", _typeof(this.props.cart.orderItems), this.props.cart.orderItems);
       this.props.cart.orderItems = this.props.cart.orderItems || [];
-      console.log('PROPS', this.props);
-      console.log('STATE', this.state.cart);
       return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val, inx) {
         return _react.default.createElement("tr", {
           key: val.id
@@ -628,6 +627,8 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _product = __webpack_require__(/*! ../store/product */ "./client/store/product.js");
 
+var _order = __webpack_require__(/*! ../store/order */ "./client/store/order.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -644,23 +645,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 var SingleItem =
 /*#__PURE__*/
 function (_Component) {
   _inherits(SingleItem, _Component);
 
-  function SingleItem() {
+  function SingleItem(props) {
+    var _this;
+
     _classCallCheck(this, SingleItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SingleItem).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SingleItem).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(SingleItem, [{
@@ -687,18 +692,17 @@ function (_Component) {
       return function componentDidMount() {
         return _componentDidMount.apply(this, arguments);
       };
-    }() // handleSubmit(id) {
-    //   return () =>{
-    //     event.preventDefault();
-    //     this.props.(id)
-    //     //FINISHING ADDING THIS!!
-    //   }
-    // }
-
+    }()
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(evt) {
+      console.log('evt', evt.singleProduct, _order.addItem);
+      this.props.addItem(evt.singleProduct); //FINISHING ADDING THIS!!
+    }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var singleProduct = this.props.singleProduct;
       return _react.default.createElement("div", null, _react.default.createElement("h1", null, singleProduct.name), _react.default.createElement("img", {
@@ -707,7 +711,7 @@ function (_Component) {
       }), _react.default.createElement("h3", null, "$", singleProduct.price), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
         type: "submit",
         onClick: function onClick() {
-          return _this.handleSubmit(_this.props.id);
+          return _this2.handleSubmit(_this2.props);
         }
       }, "Add To Cart"));
     }
@@ -726,6 +730,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchSingleProduct: function fetchSingleProduct(id) {
       return dispatch((0, _product.getProductById)(id));
+    },
+    addItem: function addItem(id) {
+      return dispatch((0, _order.addItem)(id));
     }
   };
 };
@@ -1380,11 +1387,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = _default;
-exports.updateItem = exports.removeItem = exports.addItem = exports.getCart = exports.getOrderById = exports.getAllOrders = void 0;
+exports.removeItem = exports.addItem = exports.getCart = exports.getOrderById = exports.getAllOrders = void 0;
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
-
-var _history = _interopRequireDefault(__webpack_require__(/*! ../history */ "./client/history.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1411,19 +1416,20 @@ var GOT_ALL_ORDERS = 'GOT_ALL_ORDERS';
 var GOT_SINGLE_ORDER = 'GOT_SINGLE_ORDER';
 var GOT_CART = 'GOT_CART';
 var ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
-var REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
-var UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART';
-var CLEAR_CART = 'CLEAR_CART'; // const REMOVE_USER = 'REMOVE_USER’
+var REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'; // const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
+// const CLEAR_CART = 'CLEAR_CART'
+// const REMOVE_USER = 'REMOVE_USER’
 
 /**
  * INITIAL STATE
  */
+//commented out update - we believe we wont need it --> Melanie, Monday 12:04pm
 //change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
 
 var initialState = {
   orders: [],
   singleOrder: {},
-  cart: {}
+  cart: []
   /**
    * ACTION CREATORS
    */
@@ -1456,20 +1462,14 @@ var removeItemFromCart = function removeItemFromCart(item) {
     type: REMOVE_ITEM_FROM_CART,
     item: item
   };
-};
+}; // const updateItemFromCart = item => ({
+//   type: UPDATE_ITEM_IN_CART,
+//   item
+// })
+// const clearCart = () => ({
+//   type: CLEAR_CART
+// })
 
-var updateItemFromCart = function updateItemFromCart(item) {
-  return {
-    type: UPDATE_ITEM_IN_CART,
-    item: item
-  };
-};
-
-var clearCart = function clearCart() {
-  return {
-    type: CLEAR_CART
-  };
-};
 
 var gotCart = function gotCart(cart) {
   return {
@@ -1543,7 +1543,7 @@ var getOrderById = function getOrderById(orderId) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return _axios.default.get("/api/order/".concat(orderId));
+                return _axios.default.post("/api/order", orderId);
 
               case 3:
                 _ref4 = _context2.sent;
@@ -1574,7 +1574,7 @@ var getOrderById = function getOrderById(orderId) {
 
 exports.getOrderById = getOrderById;
 
-var getCart = function getCart(userId) {
+var getCart = function getCart() {
   return (
     /*#__PURE__*/
     function () {
@@ -1589,7 +1589,7 @@ var getCart = function getCart(userId) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return _axios.default.get("/api/order/cart/".concat(userId));
+                return _axios.default.get("/api/user/cart");
 
               case 3:
                 _ref6 = _context3.sent;
@@ -1620,7 +1620,7 @@ var getCart = function getCart(userId) {
 
 exports.getCart = getCart;
 
-var addItem = function addItem(userId, item) {
+var addItem = function addItem(item) {
   return (
     /*#__PURE__*/
     function () {
@@ -1633,28 +1633,30 @@ var addItem = function addItem(userId, item) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return _axios.default.post("/api/order/cart/".concat(userId), item);
+                console.log('ITEM', item);
+                _context4.prev = 1;
+                _context4.next = 4;
+                return _axios.default.post("/api/user/cart", item);
 
-              case 3:
+              case 4:
                 _ref8 = _context4.sent;
                 data = _ref8.data;
+                console.log(data);
                 dispatch(addItemToCart(data));
-                _context4.next = 11;
+                _context4.next = 13;
                 break;
 
-              case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](1);
                 console.error(_context4.t0);
 
-              case 11:
+              case 13:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee4, this, [[1, 10]]);
       }));
 
       return function (_x4) {
@@ -1666,7 +1668,7 @@ var addItem = function addItem(userId, item) {
 
 exports.addItem = addItem;
 
-var removeItem = function removeItem(userId, itemId) {
+var removeItem = function removeItem(itemId) {
   return (
     /*#__PURE__*/
     function () {
@@ -1679,7 +1681,7 @@ var removeItem = function removeItem(userId, itemId) {
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return _axios.default.delete("/api/order/cart/".concat(userId, "/").concat(itemId));
+                return _axios.default.delete("/api/user/cart", itemId);
 
               case 3:
                 //delete on frontend
@@ -1705,59 +1707,21 @@ var removeItem = function removeItem(userId, itemId) {
       };
     }()
   );
-};
+}; // export const updateItem = (userId, item) => async dispatch => {
+//   try {
+//     const {data} = await axios.put(`/api/order/cart/${userId}`, item)
+//     dispatch(updateItemFromCart(data))
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
-exports.removeItem = removeItem;
-
-var updateItem = function updateItem(userId, item) {
-  return (
-    /*#__PURE__*/
-    function () {
-      var _ref10 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6(dispatch) {
-        var _ref11, data;
-
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
-                return _axios.default.put("/api/order/cart/".concat(userId), item);
-
-              case 3:
-                _ref11 = _context6.sent;
-                data = _ref11.data;
-                dispatch(updateItemFromCart(data));
-                _context6.next = 11;
-                break;
-
-              case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.error(_context6.t0);
-
-              case 11:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this, [[0, 8]]);
-      }));
-
-      return function (_x6) {
-        return _ref10.apply(this, arguments);
-      };
-    }()
-  );
-};
 /**
  * REDUCER
  */
 
 
-exports.updateItem = updateItem;
+exports.removeItem = removeItem;
 
 function _default() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -1775,11 +1739,13 @@ function _default() {
       });
 
     case GOT_CART:
+      console.log("Action \n\n\n\n\n\n\n\n", action);
       return _objectSpread({}, state, {
-        cart: action.cart
+        cart: _toConsumableArray(state.cart).concat([action.cart])
       });
 
     case ADD_ITEM_TO_CART:
+      console.log('ACTION ITEM', action.item);
       return _objectSpread({}, state, {
         cart: _toConsumableArray(state.cart).concat([action.item])
       });
@@ -1788,19 +1754,19 @@ function _default() {
       return _objectSpread({}, state, {
         cart: state.cart.filter(function (item) {
           return item.id !== action.itemId;
-        })
-      });
+        }) // case UPDATE_ITEM_IN_CART:
+        //   console.log('ACTION', action.item)
+        //   console.log('STATE IN REDUCER \n\n\n\n\n', state)
+        //   console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems)
+        //   return {
+        //     ...state,
+        //     cart: {
+        //       orderItems: state.cart.orderItems.map(
+        //         item => (action.item.id === item.id ? action.item : item)
+        //       )
+        //     }
+        //   }
 
-    case UPDATE_ITEM_IN_CART:
-      console.log('ACTION', action.item);
-      console.log('STATE IN REDUCER \n\n\n\n\n', state);
-      console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems);
-      return _objectSpread({}, state, {
-        cart: {
-          orderItems: state.cart.orderItems.map(function (item) {
-            return action.item.id === item.id ? action.item : item;
-          })
-        }
       });
 
     default:

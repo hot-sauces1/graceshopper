@@ -48,9 +48,12 @@ class Cart extends Component {
   }
 
   render() {
+    console.log(
+      'CART',
+      typeof this.props.cart.orderItems,
+      this.props.cart.orderItems
+    )
     this.props.cart.orderItems = this.props.cart.orderItems || []
-    console.log('PROPS', this.props)
-    console.log('STATE', this.state.cart)
     return (
       <div>
         <table>
