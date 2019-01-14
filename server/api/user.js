@@ -5,7 +5,6 @@ module.exports = router
 router.get('/cart', async (req, res, next) => {
   try {
     let activeOrder
-    console.log('REQ.session\n\n\n\n', req.session.userid)
     //check if user is logged in as that user id
     if (req.user.id) {
       activeOrder = await Order.findOne(
@@ -28,7 +27,8 @@ router.get('/cart', async (req, res, next) => {
         {include: [{model: Product}]}
       )
     }
-    res.send(activeOrder)
+    console.log('activeOrder \n\n\n\n\n\n\n\n', activeOrder)
+    res.json(activeOrder)
   } catch (err) {
     next(err)
   }

@@ -17,7 +17,7 @@ const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
  */
 //commented out update - we believe we wont need it --> Melanie, Monday 12:04pm
 //change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
-const initialState = {orders: [], singleOrder: {}, cart: {}}
+const initialState = {orders: [], singleOrder: {}, cart: []}
 
 /**
  * ACTION CREATORS
@@ -91,8 +91,8 @@ export const addItem = item => async dispatch => {
   try {
     //clear whether this is item or itemId
     const {data} = await axios.post(`/api/user/cart`, item)
-    const val = data[0]
-    dispatch(addItemToCart(val))
+    console.log(data)
+    dispatch(addItemToCart(data))
   } catch (error) {
     console.error(error)
   }
@@ -134,17 +134,16 @@ export default function(state = initialState, action) {
         singleOrder: action.singleOrder
       }
     case GOT_CART:
+      console.log('Action \n\n\n\n\n\n\n\n', action)
       return {
         ...state,
-        cart: action.cart
+        cart: [...state.cart, action.cart]
       }
     case ADD_ITEM_TO_CART:
       console.log('ACTION ITEM', action.item)
       return {
         ...state,
-        cart: {
-          orderItems: [action.item]
-        }
+        cart: [...state.cart, action.item]
       }
     case REMOVE_ITEM_FROM_CART:
       return {
