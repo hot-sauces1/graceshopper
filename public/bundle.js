@@ -697,8 +697,8 @@ function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
-      console.log('evt', evt, _order.addItem);
-      this.props.addItem(evt.singleProduct.id); //FINISHING ADDING THIS!!
+      console.log('evt', evt.singleProduct, _order.addItem);
+      this.props.addItem(evt.singleProduct); //FINISHING ADDING THIS!!
     }
   }, {
     key: "render",
@@ -1392,17 +1392,7 @@ exports.removeItem = exports.addItem = exports.getCart = exports.getOrderById = 
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
-var _history = _interopRequireDefault(__webpack_require__(/*! ../history */ "./client/history.js"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -1630,7 +1620,7 @@ var addItem = function addItem(item) {
       var _ref7 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee4(dispatch) {
-        var _ref8, data;
+        var _ref8, data, val;
 
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
@@ -1644,21 +1634,22 @@ var addItem = function addItem(item) {
               case 4:
                 _ref8 = _context4.sent;
                 data = _ref8.data;
-                dispatch(addItemToCart(data));
-                _context4.next = 12;
+                val = data[0];
+                dispatch(addItemToCart(val));
+                _context4.next = 13;
                 break;
 
-              case 9:
-                _context4.prev = 9;
+              case 10:
+                _context4.prev = 10;
                 _context4.t0 = _context4["catch"](1);
                 console.error(_context4.t0);
 
-              case 12:
+              case 13:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[1, 9]]);
+        }, _callee4, this, [[1, 10]]);
       }));
 
       return function (_x4) {
@@ -1746,8 +1737,11 @@ function _default() {
       });
 
     case ADD_ITEM_TO_CART:
+      console.log("ACTION ITEM", action.item);
       return _objectSpread({}, state, {
-        cart: _toConsumableArray(state.cart).concat([action.item])
+        cart: {
+          orderItems: [action.item]
+        }
       });
 
     case REMOVE_ITEM_FROM_CART:

@@ -14,8 +14,8 @@ class SingleItem extends Component {
   }
 
   handleSubmit(evt) {
-    console.log('evt', evt, addItem)
-    this.props.addItem(evt.singleProduct.id)
+    console.log('evt', evt.singleProduct, addItem)
+    this.props.addItem(evt.singleProduct)
     //FINISHING ADDING THIS!!
   }
 

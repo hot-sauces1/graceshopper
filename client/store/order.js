@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -92,7 +91,8 @@ export const addItem = item => async dispatch => {
   try {
     //clear whether this is item or itemId
     const {data} = await axios.post(`/api/user/cart`, item)
-    dispatch(addItemToCart(data))
+    const val = data[0]
+    dispatch(addItemToCart(val))
   } catch (error) {
     console.error(error)
   }
@@ -139,9 +139,12 @@ export default function(state = initialState, action) {
         cart: action.cart
       }
     case ADD_ITEM_TO_CART:
+      console.log('ACTION ITEM', action.item)
       return {
         ...state,
-        cart: [...state.cart, action.item]
+        cart: {
+          orderItems: [action.item]
+        }
       }
     case REMOVE_ITEM_FROM_CART:
       return {
