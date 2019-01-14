@@ -22,23 +22,30 @@ const googleConfig = {
 
 const strategy = new GoogleStrategy(
   googleConfig,
-  (token, refreshToken, profile, done) => {
-    const googleId = profile.id
-    const name = profile.displayName
-    const email = profile.emails[0].value
-
-    User.findOrCreate({
-      where: {googleId},
-      defaults: {name, email}
-    })
-      .then(([user]) => done(null, user))
-      .catch(done)
+  async (token, refreshToken, profile, done) => {
+    try {
+      console.log('profile :: \n\n\n\n', profile)
+      const googleId = profile.id
+      const {name} = profile
+      const email = profile.emails[0].value
+      const user = await User.findOrCreate({
+        where: {
+          googleId,
+          email,
+          firstName: name.givenName,
+          lastName: name.familyName
+        }
+      })
+      await done(user)
+    } catch (err) {
+      console.error(err)
+    }
   }
 )
 
 passport.use(strategy)
 
-router.get('/', passport.authenticate('google', {scope: 'email'}))
+router.get('/', passport.authenticate('google', {scope: ['profile', 'email']}))
 
 router.get(
   '/callback',

@@ -8,14 +8,14 @@ router.put('/', async (req, res, next) => {
   try {
     let checkedOut
     if (req.body.id) {
-      checkedOut = await Order.findAll({
+      checkedOut = await Order.findOne({
         where: {
           isActive: true,
           userId: req.body.id
         }
       })
     } else {
-      checkedOut = await Order.findAll({
+      checkedOut = await Order.findOne({
         where: {
           isActive: true,
           sessionId: req.sessionID

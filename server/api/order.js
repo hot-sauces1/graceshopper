@@ -6,6 +6,32 @@ module.exports = router
 
 //make considerations for adding userId into this route
 
+router.delete('/cart', async (req, res, next) => {
+  try {
+    let removeToCart
+    if (req.body.userId) {
+      removeToCart = await Order.findOne({
+        where: {
+          isActive: true,
+          userId: req.body.userId
+        }
+      })
+      await removeToCart.removeProduct(req.body.id)
+    } else {
+      removeToCart = await Order.findOne({
+        where: {
+          isActive: true,
+          sessionId: req.session.id
+        }
+      }).removeProduct(req.body.id)
+    }
+    res.status(204).end()
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 router.post('/', async (req, res, next) => {
   try {
     const singleOrder = await Order.findOne(

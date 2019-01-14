@@ -2,31 +2,19 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const OrderItem = db.define('orderItems', {
-  name: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
-  },
-  description: {
-    type: Sequelize.TEXT,
-    unique: true,
-    allowNull: false
-  },
   price: {
     type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  image: {
-    type: Sequelize.STRING,
-    validate: {
-      isUrl: true
-    }
+    defaultValue: 0
   },
   quantity: {
     type: Sequelize.INTEGER,
-    defaultValue: 1,
-    allowNull: false
+    defaultValue: 1
   }
 })
+
+OrderItem.prototype.increase = function() {
+  console.log('increasing \n\n\n', this.quantity)
+  ++this.quantity
+}
 
 module.exports = OrderItem
