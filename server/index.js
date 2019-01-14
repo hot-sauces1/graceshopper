@@ -60,7 +60,9 @@ const createApp = () => {
       resave: false,
       saveUninitialized: false,
       genid: function(req) {
-        return uuidv4()
+        const a = uuidv4()
+        const b = a.replace(/[^a-z0-9]/gi, '')
+        return b
       }
     })
   )
