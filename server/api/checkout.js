@@ -26,20 +26,33 @@ router.put('/', async (req, res, next) => {
     const products = await checkedOut.getProducts()
     // [individual prices]
 
-    //assign the price * quantity to OrderItem
-    await Promise.all(
-      products.forEach(async prod => {
-        const item = await OrderItem.findOne({
-          where: {productId: prod.id, orderId: req.body.id}
-        })
-        item.price = prod.price * item.quantity
-        checkedOut.total += item.price
-      })
-    )
-
     const updateAction = await checkedOut.update({
       isActive: false
     })
+
+    await Promise.all(
+      products.map(async product => {
+        try {
+          let item = await OrderItem.findOne({
+            where: {productId: product.id, orderId: req.body.id}
+          })
+
+          let itemPrice = product.price * item.quantity
+          await item.update({price: itemPrice})
+          let total = checkedOut.total + item.price
+          await checkedOut.update({total: total})
+
+          // console.log('prod :: ', product.name)
+          // console.log('price :: ', product.price)
+          // console.log('quantity :: ', item.quantity)
+          // console.log('total price for item :: ', item.price)
+          // console.log('total price for order :: ', checkedOut.total)
+        } catch (err) {
+          console.error(err)
+        }
+      })
+    )
+
     res.status(200).send(updateAction)
   } catch (error) {
     next(error)

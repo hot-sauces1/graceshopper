@@ -15,39 +15,40 @@ async function seed() {
 
   await Order.create()
   const order = await Order.findById(1)
-  let prod = await Product.findAll()
+  let allProducts = await Product.findAll()
   const user1 = await User.findById(1)
 
   await order.setUser(user1)
-  await order.addProducts([...prod])
+  await order.addProducts([...allProducts])
 
   const checkout = await order.getProducts()
 
-  // const testItem = await OrderItem.findOne({where: {productId: 1, orderId: 1}})
-
-  // checkout.forEach(prod => {
-  //   console.log('\nname ::', prod.name)
-  //   console.log('price ::', prod.price)
+  // console.log(Object.values(checkout))
+  // checkout.forEach(v => {
+  //   console.log(v.name)
   // })
 
-  //assign the price * quantity to OrderItem
   // await Promise.all(
-  await Promise.all(
-    checkout.forEach(async prod => {
-      try {
-        let item = await OrderItem.findOne({
-          where: {productId: prod.id, orderId: order.id}
-        })
-        console.log('item :: ', item)
-        console.log('prod :: ', prod)
-        item.price = prod.price * item.quantity
-        order.total += item.price
-      } catch (err) {
-        console.error(err)
-      }
-    })
-  )
-  // })
+  //   checkout.map(async product => {
+  //     try {
+  //       let item = await OrderItem.findOne({
+  //         where: {productId: product.id, orderId: order.id}
+  //       })
+
+  //       let itemPrice = product.price * item.quantity
+  //       await item.update({price: itemPrice})
+  //       let total = order.total + item.price
+  //       await order.update({total: total})
+
+  //       console.log('prod :: ', product.name)
+  //       console.log('price :: ', product.price)
+  //       console.log('quantity :: ', item.quantity)
+  //       console.log('total price for item :: ', item.price)
+  //       console.log('total price for order :: ', order.total)
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   })
   // )
 
   console.log(`seeded ${users.length} users`)
