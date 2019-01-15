@@ -25,5 +25,4 @@ OrderItem.hook('afterUpdate', async instance => {
     await instance.destroy()
   }
 })
-
 module.exports = OrderItem
