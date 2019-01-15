@@ -48,7 +48,7 @@ class Cart extends Component {
   }
 
   render() {
-    console.log('this.props\n\n\n\n', this.props)
+    const cart = this.props.cart || []
     return (
       <div>
         <table>
@@ -62,39 +62,30 @@ class Cart extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.cart.map((val, idx) => {
+            {cart.map((val, idx) => {
+              const product = val
+              console.log('val products', val.products)
               return (
                 <tr key={idx}>
                   <td>
                     <img
-                      src={val.image}
-                      alt={val.name}
+                      src={product.products[0].image}
+                      alt={product.products[0].name}
                       width="50px"
                       height="50px"
                     />
                   </td>
-                  <td>{val.name}</td>
-                  <td>{val.price}</td>
-                  <td>
-                    Total{' '}
-                    {/* {`$${(
-                      val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))
-                    ).toFixed(2)}`} */}
-                    {val.price}
-                  </td>
+                  <td>{product.products[0].name}</td>
+                  <td>{product.products[0].price}</td>
+                  <td>Total {product.products[0].price}</td>
                   <td>
                     <input
                       type="text"
                       onChange={this.handleOnChange}
-                      placeholder={val.quantity}
+                      placeholder={1}
                     />
                   </td>
                   <td>
-                    {' '}
-                    {/* <button type="button" onClick={this.handleSubmit(val.id)}>
-                      Update
-                    </button> */}
-                    {/* <button type="button" onClick={() => this.increase(1, val)}> */}
                     <button
                       type="button"
                       onClick={() =>
