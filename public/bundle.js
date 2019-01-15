@@ -346,11 +346,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
     _this.state = {
-      cart: {}
+      cart: []
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.handleOnChange = this.handleOnChange.bind(this)
-    // this.delete = this.delete.bind(this)
-
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.increase = _this.increase.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.decrease = this.decrease.bind(this)
 
     return _this;
@@ -367,7 +365,7 @@ function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.props.getCart(this.props.match.params.id);
+                return this.props.getCart();
 
               case 2:
                 this.setState({
@@ -389,7 +387,6 @@ function (_Component) {
   }, {
     key: "increase",
     value: function increase(num, evt) {
-      console.log('EVT', evt);
       (0, _order.updateItem)(num, evt);
     }
   }, {
@@ -407,11 +404,6 @@ function (_Component) {
       };
     }
   }, {
-    key: "handleOnChange",
-    value: function handleOnChange(evt) {
-      console.log('That thing', evt.target.value);
-    }
-  }, {
     key: "handleSubmit",
     value: function handleSubmit(item) {
       var _this3 = this;
@@ -427,40 +419,36 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log('CART', _typeof(this.props.cart.orderItems), this.props.cart.orderItems);
-      this.props.cart.orderItems = this.props.cart.orderItems || [];
-      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val, inx) {
+      var cart = this.props.cart || [];
+      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, cart.map(function (val, idx) {
+        var product = val;
         return _react.default.createElement("tr", {
-          key: val.id
+          key: idx
         }, _react.default.createElement("td", null, _react.default.createElement("img", {
-          src: val.image,
-          alt: val.name,
+          src: product.products[0].image,
+          alt: product.products[0].name,
           width: "50px",
           height: "50px"
-        })), _react.default.createElement("td", null, val.name), _react.default.createElement("td", null, val.price), _react.default.createElement("td", null, "Total", ' ', val.price), _react.default.createElement("td", null, _react.default.createElement("input", {
+        })), _react.default.createElement("td", null, product.products[0].name), _react.default.createElement("td", null, product.products[0].price), _react.default.createElement("td", null, "Total ", product.products[0].price), _react.default.createElement("td", null, _react.default.createElement("input", {
           type: "text",
           onChange: _this4.handleOnChange,
-          placeholder: val.quantity
-        })), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
+          placeholder: 1
+        })), _react.default.createElement("td", null, _react.default.createElement("button", {
           type: "button",
           onClick: function onClick() {
             return _this4.setState({
-              cart: {
-                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
-                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
-                })
-              }
+              cart: _this4.state.cart.map(function (cartItem) {
+                return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+              })
             });
           }
         }, "+"), _react.default.createElement("button", {
           type: "button",
           onClick: function onClick() {
             return _this4.setState({
-              cart: {
-                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
-                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
-                })
-              }
+              cart: [_this4.state.cart.map(function (cartItem) {
+                return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+              })]
             });
           }
         }, "-")), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
@@ -484,8 +472,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getCart: function getCart(userId) {
-      return dispatch((0, _order.getCart)(userId));
+    getCart: function getCart() {
+      return dispatch((0, _order.getCart)());
     },
     updateItem: function updateItem(id) {
       return dispatch((0, _order.updateItem)(id));
@@ -584,7 +572,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log('HEREs PROPS', this.props.cart);
       return _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"))), _react.default.createElement("tbody", null, this.props.cart.map(function (val) {
         return _react.default.createElement("tr", {
           key: val.id
@@ -776,8 +763,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-// import {connect} from 'react-redux'
-// import {getCart} from '../store/order'
 var DeliveryForm =
 /*#__PURE__*/
 function (_Component) {
@@ -1061,8 +1046,7 @@ function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
-      console.log('evt', evt.singleProduct, _order.addItem);
-      this.props.addItem(evt.singleProduct); //FINISHING ADDING THIS!!
+      this.props.addItem(evt.singleProduct);
     }
   }, {
     key: "render",
@@ -1072,7 +1056,9 @@ function (_Component) {
       var singleProduct = this.props.singleProduct;
       return _react.default.createElement("div", null, _react.default.createElement("h1", null, singleProduct.name), _react.default.createElement("img", {
         src: singleProduct.image,
-        alt: "Ye and Dave Chappelle"
+        alt: singleProduct.name,
+        width: "300px",
+        height: "400px"
       }), _react.default.createElement("h3", null, "$", singleProduct.price), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
         type: "submit",
         onClick: function onClick() {
@@ -1794,16 +1780,7 @@ var GOT_SINGLE_ORDER = 'GOT_SINGLE_ORDER';
 var GOT_CART = 'GOT_CART';
 var ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
 var REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
-var CHECK_OUT = 'CHECK_OUT'; // const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
-// const CLEAR_CART = 'CLEAR_CART'
-// const REMOVE_USER = 'REMOVE_USER’
-
-/**
- * INITIAL STATE
- */
-//commented out update - we believe we wont need it --> Melanie, Monday 12:04pm
-//change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
-
+var CHECK_OUT = 'CHECK_OUT';
 var initialState = {
   orders: [],
   singleOrder: {},
@@ -1840,14 +1817,7 @@ var removeItemFromCart = function removeItemFromCart(item) {
     type: REMOVE_ITEM_FROM_CART,
     item: item
   };
-}; // const updateItemFromCart = item => ({
-//   type: UPDATE_ITEM_IN_CART,
-//   item
-// })
-// const clearCart = () => ({
-//   type: CLEAR_CART
-// })
-
+};
 
 var gotCart = function gotCart(cart) {
   return {
@@ -2065,7 +2035,6 @@ var removeItem = function removeItem(itemId) {
                 return _axios.default.delete("/api/user/cart", itemId);
 
               case 3:
-                //delete on frontend
                 dispatch(removeItemFromCart(itemId));
                 _context5.next = 9;
                 break;
@@ -2134,15 +2103,7 @@ var checkOutCart = function checkOutCart(userId) {
       };
     }()
   );
-}; // export const updateItem = (userId, item) => async dispatch => {
-//   try {
-//     const {data} = await axios.put(`/api/order/cart/${userId}`, item)
-//     dispatch(updateItemFromCart(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
+};
 /**
  * REDUCER
  */
@@ -2166,15 +2127,13 @@ function _default() {
       });
 
     case GOT_CART:
-      console.log('Action \n\n\n\n\n\n\n\n', action);
       return _objectSpread({}, state, {
-        cart: _toConsumableArray(state.cart).concat([action.cart])
+        cart: [action.cart]
       });
 
     case ADD_ITEM_TO_CART:
-      console.log('ACTION ITEM', action.item);
       return _objectSpread({}, state, {
-        cart: _toConsumableArray(state.cart).concat([action.item])
+        cart: _toConsumableArray(state.cart).concat([action.item[0]])
       });
 
     case REMOVE_ITEM_FROM_CART:
@@ -2186,19 +2145,7 @@ function _default() {
 
     case CHECK_OUT:
       return _objectSpread({}, state, {
-        cart: [] // case UPDATE_ITEM_IN_CART:
-        //   console.log('ACTION', action.item)
-        //   console.log('STATE IN REDUCER \n\n\n\n\n', state)
-        //   console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems)
-        //   return {
-        //     ...state,
-        //     cart: {
-        //       orderItems: state.cart.orderItems.map(
-        //         item => (action.item.id === item.id ? action.item : item)
-        //       )
-        //     }
-        //   }
-
+        cart: []
       });
 
     default:
@@ -2242,8 +2189,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * ACTION TYPES
  */
 var GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS';
-var GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'; // const REMOVE_USER = 'REMOVE_USER’
-
+var GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT';
 /**
  * INITIAL STATE
  */
