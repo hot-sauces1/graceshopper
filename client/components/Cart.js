@@ -64,7 +64,6 @@ class Cart extends Component {
           <tbody>
             {cart.map((val, idx) => {
               const product = val
-              console.log('val products', val.products)
               return (
                 <tr key={idx}>
                   <td>
