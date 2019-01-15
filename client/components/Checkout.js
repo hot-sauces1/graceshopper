@@ -1,25 +1,28 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {Elements, StripeProvider} from 'react-stripe-elements'
 import DeliveryForm from './DeliveryForm'
-import {getCart} from '../store/order'
+import {checkOutCart} from '../store/order'
 
 class Checkout extends Component {
-  async componentDidMount() {
+  async componentDidMount(id) {
     try {
-      await this.props.getCart()
+      await this.props.checkOutCart(id)
     } catch (err) {
       console.error(err)
     }
   }
 
   render() {
-    const {cart} = this.props || {}
     return (
       <div>
-        <h1>Confirm Cehckout</h1>
+        <h1>Confirm Checkout</h1>
         <div>
-          <DeliveryForm />
+          <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+            <Elements>
+              <DeliveryForm />
+            </Elements>
+          </StripeProvider>
         </div>
       </div>
     )
@@ -34,7 +37,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: userId => dispatch(getCart(userId))
+    checkOutCart: userId => dispatch(checkOutCart(userId))
   }
 }
 

@@ -13,8 +13,11 @@ const OrderItem = db.define('orderItems', {
 })
 
 OrderItem.prototype.increase = function() {
-  console.log('increasing \n\n\n', this.quantity)
   ++this.quantity
+}
+
+OrderItem.prototype.decrease = function() {
+  --this.quantity
 }
 
 module.exports = OrderItem

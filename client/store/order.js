@@ -8,6 +8,7 @@ const GOT_SINGLE_ORDER = 'GOT_SINGLE_ORDER'
 const GOT_CART = 'GOT_CART'
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
+const CHECK_OUT = 'CHECK_OUT'
 // const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 // const CLEAR_CART = 'CLEAR_CART'
 // const REMOVE_USER = 'REMOVE_USER’
@@ -53,6 +54,11 @@ const removeItemFromCart = item => ({
 
 const gotCart = cart => ({
   type: GOT_CART,
+  cart
+})
+
+const checkOut = cart => ({
+  type: CHECK_OUT,
   cart
 })
 
@@ -109,6 +115,15 @@ export const removeItem = itemId => async dispatch => {
   }
 }
 
+export const checkOutCart = userId => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/checkout`, userId)
+    dispatch(checkOut(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // export const updateItem = (userId, item) => async dispatch => {
 //   try {
 //     const {data} = await axios.put(`/api/order/cart/${userId}`, item)
@@ -149,6 +164,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cart: state.cart.filter(item => item.id !== action.itemId)
+      }
+    case CHECK_OUT:
+      return {
+        ...state,
+        cart: []
       }
     // case UPDATE_ITEM_IN_CART:
     //   console.log('ACTION', action.item)
