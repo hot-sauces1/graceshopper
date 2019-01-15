@@ -13,8 +13,17 @@ const OrderItem = db.define('orderItems', {
 })
 
 OrderItem.prototype.increase = function() {
-  console.log('increasing \n\n\n', this.quantity)
   ++this.quantity
 }
+
+OrderItem.prototype.decrease = function() {
+  --this.quantity
+}
+
+OrderItem.hook('afterUpdate', async instance => {
+  if (instance.quantity <= 0) {
+    await instance.destroy()
+  }
+})
 
 module.exports = OrderItem

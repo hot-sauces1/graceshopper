@@ -19,7 +19,8 @@ async function seed() {
 
   await order.addProducts([...prod])
   const testItem = await OrderItem.findOne({where: {productId: 1, orderId: 1}})
-  await testItem.increase()
+  await testItem.decrease()
+  await testItem.decrease()
   await testItem.save()
   console.log(testItem.quantity)
   // console.log('res :: \n\n\n\n', res)
