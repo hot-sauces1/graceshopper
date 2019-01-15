@@ -5,13 +5,9 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-
     const getCart = await Order.findOne({
       where: {isActive: true, userId: 1}
-      // where: findActiveCart(req.user, req.session)
-
     })
-    console.log('GETCART', getCart)
     res.json(getCart)
   } catch (err) {
     next(err)

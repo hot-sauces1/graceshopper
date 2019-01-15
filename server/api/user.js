@@ -27,7 +27,6 @@ router.get('/cart', async (req, res, next) => {
         {include: [{model: Product}]}
       )
     }
-    console.log('activeOrder \n\n\n\n\n\n\n\n', activeOrder)
     res.json(activeOrder)
   } catch (err) {
     next(err)
@@ -44,7 +43,6 @@ router.get('/cart', async (req, res, next) => {
 router.post('/cart', async (req, res, next) => {
   try {
     let addToCart
-    console.log('REQQQQQ\n\n\n\n\n\n\n\n\n\n\n\n', req.session)
     if (req.session.userId) {
       addToCart = await Order.findOrCreate({
         where: {
@@ -53,7 +51,6 @@ router.post('/cart', async (req, res, next) => {
           sessionId: req.sessionID
         }
       })
-      console.log('addToCart\n\n\n\n\n\n', addToCart)
       //await addToCart.addProducts(req.body.id)
     } else {
       addToCart = await Order.findOrCreate({
@@ -62,7 +59,6 @@ router.post('/cart', async (req, res, next) => {
           sessionId: req.sessionID
         }
       })
-      console.log('addToCart\n\n\n\n\n\n', addToCart)
       //await addToCart.addProducts(req.body.id)
     }
     res.send(addToCart)

@@ -2,10 +2,6 @@ const router = require('express').Router()
 const {Order, Product} = require('../db/models')
 module.exports = router
 
-// /api/order
-
-//make considerations for adding userId into this route
-
 router.delete('/cart', async (req, res, next) => {
   try {
     let removeToCart
@@ -30,7 +26,6 @@ router.delete('/cart', async (req, res, next) => {
     next(error)
   }
 })
-
 
 router.post('/', async (req, res, next) => {
   try {

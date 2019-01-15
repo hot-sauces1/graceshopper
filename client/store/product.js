@@ -6,7 +6,6 @@ import history from '../history'
  */
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
-// const REMOVE_USER = 'REMOVE_USER’
 
 /**
  * INITIAL STATE

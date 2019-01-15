@@ -1,8 +1,5 @@
 import React, {Component} from 'react'
 import {injectStripe, CardElement} from 'react-stripe-elements'
-// import {connect} from 'react-redux'
-
-// import {getCart} from '../store/order'
 
 class DeliveryForm extends Component {
   constructor() {

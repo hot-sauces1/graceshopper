@@ -77,7 +77,6 @@ describe('AllProducts', () => {
     const productImageUrl = wrapper
       .children()
       .find('https://picsum.photos/200/300/?random').props.src
-    console.log('Sardines\n\n\n\n\n', productImageUrl.debug())
     expect(productImageUrl).to.equal(productImageUrl)
   })
 })

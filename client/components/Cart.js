@@ -13,8 +13,6 @@ class Cart extends Component {
       cart: {}
     }
     this.handleSubmit = this.handleSubmit.bind(this)
-    // this.handleOnChange = this.handleOnChange.bind(this)
-    // this.delete = this.delete.bind(this)
     this.increase = this.increase.bind(this)
     // this.decrease = this.decrease.bind(this)
   }
@@ -24,7 +22,6 @@ class Cart extends Component {
   }
 
   increase(num, evt) {
-    console.log('EVT', evt)
     updateItem(num, evt)
   }
 
@@ -36,9 +33,6 @@ class Cart extends Component {
       this.props.removeItem(item)
     }
   }
-  handleOnChange(evt) {
-    console.log('That thing', evt.target.value)
-  }
 
   handleSubmit(item) {
     return () => {
@@ -48,11 +42,6 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(
-      'CART',
-      typeof this.props.cart.orderItems,
-      this.props.cart.orderItems
-    )
     this.props.cart.orderItems = this.props.cart.orderItems || []
     return (
       <div>
