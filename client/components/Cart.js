@@ -42,7 +42,7 @@ class Cart extends Component {
   }
 
   render() {
-    const cart = this.props.cart || []
+    const cart = this.state.cart || []
     return (
       <div>
         <table>
@@ -57,20 +57,20 @@ class Cart extends Component {
           </thead>
           <tbody>
             {cart.map((val, idx) => {
-              const product = val
+              // const val = val
               return (
                 <tr key={idx}>
                   <td>
                     <img
-                      src={product.products[0].image}
-                      alt={product.products[0].name}
+                      src={val.products[0].image}
+                      alt={val.products[0].name}
                       width="50px"
                       height="50px"
                     />
                   </td>
-                  <td>{product.products[0].name}</td>
-                  <td>{product.products[0].price}</td>
-                  <td>Total {product.products[0].price}</td>
+                  <td>{val.products[0].name}</td>
+                  <td>{val.products[0].price}</td>
+                  <td>Total {val.products[0].price}</td>
                   <td>
                     <input
                       type="text"
