@@ -419,17 +419,17 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      var cart = this.props.cart || [];
+      var cart = this.state.cart || [];
       return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, cart.map(function (val, idx) {
-        var product = val;
+        // const val = val
         return _react.default.createElement("tr", {
           key: idx
         }, _react.default.createElement("td", null, _react.default.createElement("img", {
-          src: product.products[0].image,
-          alt: product.products[0].name,
+          src: val.products[0].image,
+          alt: val.products[0].name,
           width: "50px",
           height: "50px"
-        })), _react.default.createElement("td", null, product.products[0].name), _react.default.createElement("td", null, product.products[0].price), _react.default.createElement("td", null, "Total ", product.products[0].price), _react.default.createElement("td", null, _react.default.createElement("input", {
+        })), _react.default.createElement("td", null, val.products[0].name), _react.default.createElement("td", null, val.products[0].price), _react.default.createElement("td", null, "Total ", val.products[0].price), _react.default.createElement("td", null, _react.default.createElement("input", {
           type: "text",
           onChange: _this4.handleOnChange,
           placeholder: 1
