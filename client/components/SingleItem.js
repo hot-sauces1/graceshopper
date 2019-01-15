@@ -24,7 +24,12 @@ class SingleItem extends Component {
     return (
       <div>
         <h1>{singleProduct.name}</h1>
-        <img src={singleProduct.image} alt="Ye and Dave Chappelle" />
+        <img
+          src={singleProduct.image}
+          alt={singleProduct.name}
+          width="300px"
+          height="400px"
+        />
         <h3>${singleProduct.price}</h3>
         <p>{singleProduct.description}</p>
         <button type="submit" onClick={() => this.handleSubmit(this.props)}>
