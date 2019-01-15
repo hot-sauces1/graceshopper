@@ -9,15 +9,7 @@ const GOT_CART = 'GOT_CART'
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
 const CHECK_OUT = 'CHECK_OUT'
-// const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
-// const CLEAR_CART = 'CLEAR_CART'
-// const REMOVE_USER = 'REMOVE_USER’
 
-/**
- * INITIAL STATE
- */
-//commented out update - we believe we wont need it --> Melanie, Monday 12:04pm
-//change cart type from array to object to solve update cart issue --> Jay Friday 4:33 PM.
 const initialState = {orders: [], singleOrder: {}, cart: []}
 
 /**
@@ -42,15 +34,6 @@ const removeItemFromCart = item => ({
   type: REMOVE_ITEM_FROM_CART,
   item
 })
-
-// const updateItemFromCart = item => ({
-//   type: UPDATE_ITEM_IN_CART,
-//   item
-// })
-
-// const clearCart = () => ({
-//   type: CLEAR_CART
-// })
 
 const gotCart = cart => ({
   type: GOT_CART,
@@ -94,7 +77,6 @@ export const getCart = () => async dispatch => {
 
 export const addItem = item => async dispatch => {
   try {
-    //clear whether this is item or itemId
     const res = await axios.post(`/api/user/cart`, item)
     dispatch(addItemToCart(res.data))
   } catch (error) {
@@ -104,9 +86,7 @@ export const addItem = item => async dispatch => {
 
 export const removeItem = itemId => async dispatch => {
   try {
-    //delete from db
     await axios.delete(`/api/user/cart`, itemId)
-    //delete on frontend
     dispatch(removeItemFromCart(itemId))
   } catch (error) {
     console.error(error)
@@ -121,15 +101,6 @@ export const checkOutCart = userId => async dispatch => {
     console.error(error)
   }
 }
-
-// export const updateItem = (userId, item) => async dispatch => {
-//   try {
-//     const {data} = await axios.put(`/api/order/cart/${userId}`, item)
-//     dispatch(updateItemFromCart(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
 
 /**
  * REDUCER
@@ -166,15 +137,6 @@ export default function(state = initialState, action) {
         ...state,
         cart: []
       }
-    // case UPDATE_ITEM_IN_CART:
-    //   return {
-    //     ...state,
-    //     cart: {
-    //       orderItems: state.cart.orderItems.map(
-    //         item => (action.item.id === item.id ? action.item : item)
-    //       )
-    //     }
-    //   }
     default:
       return state
   }

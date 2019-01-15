@@ -13,7 +13,6 @@ class Cart extends Component {
       cart: {}
     }
     this.handleSubmit = this.handleSubmit.bind(this)
-    // this.delete = this.delete.bind(this)
     this.increase = this.increase.bind(this)
     // this.decrease = this.decrease.bind(this)
   }

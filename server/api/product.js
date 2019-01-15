@@ -2,7 +2,6 @@ const router = require('express').Router()
 const {Product} = require('../db/models')
 module.exports = router
 
-// /api/product
 router.get('/:id', async (req, res, next) => {
   try {
     const singleProduct = await Product.findById(req.params.id)

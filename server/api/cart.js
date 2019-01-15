@@ -7,7 +7,6 @@ router.get('/', async (req, res, next) => {
   try {
     const getCart = await Order.findOne({
       where: {isActive: true, userId: 1}
-      // where: findActiveCart(req.user, req.session)
     })
     res.json(getCart)
   } catch (err) {
