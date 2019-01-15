@@ -427,7 +427,7 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log("CART", _typeof(this.props.cart.orderItems), this.props.cart.orderItems);
+      console.log('CART', _typeof(this.props.cart.orderItems), this.props.cart.orderItems);
       this.props.cart.orderItems = this.props.cart.orderItems || [];
       return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val, inx) {
         return _react.default.createElement("tr", {
@@ -1739,7 +1739,7 @@ function _default() {
       });
 
     case GOT_CART:
-      console.log("Action \n\n\n\n\n\n\n\n", action);
+      console.log('Action \n\n\n\n\n\n\n\n', action);
       return _objectSpread({}, state, {
         cart: _toConsumableArray(state.cart).concat([action.cart])
       });

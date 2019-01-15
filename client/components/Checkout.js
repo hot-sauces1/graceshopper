@@ -14,10 +14,10 @@ class Checkout extends Component {
   }
 
   render() {
-    const {cart} = this.props || {}
+    const cart = this.props || []
     return (
       <div>
-        <h1>Confirm Cehckout</h1>
+        <h1>Confirm Checkout</h1>
         <div>
           <DeliveryForm />
         </div>

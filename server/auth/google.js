@@ -24,10 +24,10 @@ const strategy = new GoogleStrategy(
   googleConfig,
   async (token, refreshToken, profile, done) => {
     try {
-      console.log('profile :: \n\n\n\n', profile)
       const googleId = profile.id
       const {name} = profile
       const email = profile.emails[0].value
+      console.log('profile :: \n\n\n\n', email, name, googleId)
       const user = await User.findOrCreate({
         where: {
           googleId,
