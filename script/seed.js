@@ -1,54 +1,44 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Order, Product, OrderItem} = require('../server/db/models/index')
+const {User, Order, Product} = require('../server/db/models/index')
 
-const users = require('../mock_data/users')
-const products = require('../mock_data/products')
+// const users = require('../mock_data/users')
+// const products = require('../mock_data/products')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  await Promise.all(users.map(user => User.create(user)))
-  await Promise.all(products.map(product => Product.create(product)))
+  // await Promise.all(users.map(user => User.create(user)))
+  // await Promise.all(products.map(product => Product.create(product)))
 
-  await Order.create()
-  const order = await Order.findById(1)
-  let prod = await Product.findAll()
-  const user1 = await User.findById(1)
+  // await Order.create()
+  // const order = await Order.findById(1)
+  // let allProducts = await Product.findAll()
+  // const user1 = await User.findById(1)
 
-  await order.setUser(user1)
-  await order.addProducts([...prod])
+  // await order.setUser(user1)
+  // await order.addProducts([...allProducts])
 
-  const checkout = await order.getProducts()
+  // const checkout = await order.getProducts()
 
-  // const testItem = await OrderItem.findOne({where: {productId: 1, orderId: 1}})
-
-  // checkout.forEach(prod => {
-  //   console.log('\nname ::', prod.name)
-  //   console.log('price ::', prod.price)
-  // })
-
-  //assign the price * quantity to OrderItem
   // await Promise.all(
-  await Promise.all(
-    checkout.forEach(async prod => {
-      try {
-        let item = await OrderItem.findOne({
-          where: {productId: prod.id, orderId: order.id}
-        })
-        console.log('item :: ', item)
-        console.log('prod :: ', prod)
-        item.price = prod.price * item.quantity
-        order.total += item.price
-      } catch (err) {
-        console.error(err)
-      }
-    })
-  )
-  // })
+  //   checkout.map(async product => {
+  //     try {
+  //       product.orderItems.price = product.price * product.orderItems.quantity
+  //       order.total += product.orderItems.price
+
+  //       await product.save()
+  //       await product.orderItems.save()
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   })
   // )
+
+  // order.isActive = false
+  // await await order.save()
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

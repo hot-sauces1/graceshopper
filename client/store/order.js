@@ -93,12 +93,10 @@ export const getCart = () => async dispatch => {
 }
 
 export const addItem = item => async dispatch => {
-  console.log('ITEM', item)
   try {
     //clear whether this is item or itemId
-    const {data} = await axios.post(`/api/user/cart`, item)
-    console.log(data)
-    dispatch(addItemToCart(data))
+    const res = await axios.post(`/api/user/cart`, item)
+    dispatch(addItemToCart(res.data))
   } catch (error) {
     console.error(error)
   }

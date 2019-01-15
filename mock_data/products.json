@@ -1,110 +1,38 @@
 [
   {
     "id": 1,
-    "name": "Milk - 2%",
+    "name": "White Truffle Limited Release",
     "description":
-      "molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique",
-    "price": 9027,
-    "address": "313 Ridgeway Terrace",
-    "image": "https://picsum.photos/200/300/?random"
+      "TRUFF - White Truffle Limited Release is a curated blend of ripe chili peppers, organic agave nectar, white truffle, and a hint of organic coriander. Taking inspiration from our flagship black truffle experience, we’ve shifted gears to capture the limited, seasonal availability of White Truffle. Landing on a brighter sensation, White TRUFF is presented in limited quantities and includes a special edition VIP box, fully designed to embody the essence of the holidays.",
+    "price": 3499,
+    "image":
+      "https://cdn.shopify.com/s/files/1/2182/2603/products/45931644_287262861908566_943508575815204864_n_2048x2048.jpg?v=1542047093"
   },
   {
     "id": 2,
-    "name": "Soup - Knorr, Ministrone",
+    "name": "Truff Hot Sauce",
     "description":
-      "accumsan felis ut at dolor quis odio consequat varius integer",
-    "price": 1631,
-    "address": "0472 Golf Course Point",
-    "image": "https://picsum.photos/200/300/?random"
+      "Our sauce is a curated blend of ripe chili peppers, organic agave nectar, black truffle, and savory spices. We’ve meticulously crafted a flavor profile from ingredients normally reserved for fine tequilas, delicate delicacies, and elegant dining experiences. This combination of ingredients delivers a flavor profile unprecedented to hot sauce. Our formula is as pristine as our artfully designed bottle and truffle inspired cap.",
+    "price": 1499,
+    "image":
+      "https://cdn.shopify.com/s/files/1/2182/2603/products/Oprah_F_T_2048x2048_62ad0bac-e03a-42d7-b7ae-831a278d5f5c_2048x2048.jpg?v=1541601615"
   },
   {
     "id": 3,
-    "name": "Veal - Bones",
+    "name": "Karma Sauce Red Habanero Cherry Bomb Hot Sauce",
     "description":
-      "duis mattis egestas metus aenean fermentum donec ut mauris eget massa tempor convallis nulla neque libero convallis eget",
-    "price": 6676,
-    "address": "316 Lunder Circle",
-    "image": "https://picsum.photos/200/300/?random"
+      "Ingredients: Sour cherries, habanero pepper, onion, apple, apple cider vinegar, evaporated cane juice, lime juice, salt, ground coffee, lemon zest, cinnamon, clove.",
+    "price": 8102,
+    "image":
+      "https://cdn11.bigcommerce.com/s-qqb56hyrha/images/stencil/original/products/4376/7030/7412__81673.1541378225.jpg"
   },
   {
     "id": 4,
-    "name": "Avocado",
+    "name": "Hellfire Hot Sauce",
     "description":
-      "nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim",
+      "Hellfire Fear This! Reaper Hot Sauce, 5oz.: Fear This! As featured in Maxim Magazine! 1st Place NYC XXXHot! This amazing multi award winning Reaper sauce features the fresh and all natural flavor of the new hottest pepper in the world! Even hotter than the Ghost or Scorpion peppers! Smokin' Ed's Carolina Reaper is the new reigning champion averaging a blistering 1.58 million scoville units of heat with peaks at 2.2 million!!!! With a pepper mash content of nearly 60% we have also added onions,garlic,sundried tomatoes,tomatillos,cilantro,lemon,lime,ginger and other spices to bring awesome flavor to the incredible heat of the Reaper! Needless to say this ALL NATURAL sauce is EXTREMELY HOT!!! USE CAUTION!!!! And Enjoy!!!!",
     "price": 4766,
-    "address": "32750 Waxwing Plaza",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 5,
-    "name": "Tart - Pecan Butter Squares",
-    "description":
-      "et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare",
-    "price": 7719,
-    "address": "7142 Fulton Drive",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 6,
-    "name": "Sauce - Plum",
-    "description":
-      "orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a",
-    "price": 8643,
-    "address": "9 Sunfield Hill",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 7,
-    "name": "Coriander - Ground",
-    "description":
-      "scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede",
-    "price": 264,
-    "address": "88489 Eagan Plaza",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 8,
-    "name": "Bread - Rolls, Corn",
-    "description":
-      "enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa",
-    "price": 6104,
-    "address": "1 Anzinger Alley",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 9,
-    "name": "Flour - Strong",
-    "description":
-      "pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id",
-    "price": 5404,
-    "address": "325 Charing Cross Pass",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 10,
-    "name": "Alize Sunset",
-    "description":
-      "sed interdum venenatis turpis enim blandit mi in porttitor pede",
-    "price": 1612,
-    "address": "3 Victoria Circle",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 11,
-    "name": "Lettuce - California Mix",
-    "description":
-      "sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget",
-    "price": 7447,
-    "address": "33 Roxbury Center",
-    "image": "https://picsum.photos/200/300/?random"
-  },
-  {
-    "id": 12,
-    "name": "Sardines",
-    "description":
-      "tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare",
-    "price": 4364,
-    "address": "488 Onsgard Parkway",
-    "image": "https://picsum.photos/200/300/?random"
+    "image":
+      "https://cdn11.bigcommerce.com/s-qqb56hyrha/images/stencil/original/products/3475/7184/7335__59772.1542304610.jpg"
   }
 ]

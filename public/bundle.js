@@ -427,7 +427,7 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log("this.props\n\n\n\n", this.props);
+      console.log('this.props\n\n\n\n', this.props);
       return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.map(function (val, idx) {
         return _react.default.createElement("tr", {
           key: idx
@@ -1067,7 +1067,9 @@ function (_Component) {
       var singleProduct = this.props.singleProduct;
       return _react.default.createElement("div", null, _react.default.createElement("h1", null, singleProduct.name), _react.default.createElement("img", {
         src: singleProduct.image,
-        alt: "Ye and Dave Chappelle"
+        alt: singleProduct.name,
+        width: "300px",
+        height: "400px"
       }), _react.default.createElement("h3", null, "$", singleProduct.price), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
         type: "submit",
         onClick: function onClick() {
@@ -2007,36 +2009,32 @@ var addItem = function addItem(item) {
       var _ref7 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee4(dispatch) {
-        var _ref8, data;
-
+        var res;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('ITEM', item);
-                _context4.prev = 1;
-                _context4.next = 4;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return _axios.default.post("/api/user/cart", item);
 
-              case 4:
-                _ref8 = _context4.sent;
-                data = _ref8.data;
-                console.log(data);
-                dispatch(addItemToCart(data));
-                _context4.next = 13;
+              case 3:
+                res = _context4.sent;
+                dispatch(addItemToCart(res.data));
+                _context4.next = 10;
                 break;
 
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](1);
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
                 console.error(_context4.t0);
 
-              case 13:
+              case 10:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[1, 10]]);
+        }, _callee4, this, [[0, 7]]);
       }));
 
       return function (_x4) {
@@ -2052,7 +2050,7 @@ var removeItem = function removeItem(itemId) {
   return (
     /*#__PURE__*/
     function () {
-      var _ref9 = _asyncToGenerator(
+      var _ref8 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee5(dispatch) {
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -2083,7 +2081,7 @@ var removeItem = function removeItem(itemId) {
       }));
 
       return function (_x5) {
-        return _ref9.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       };
     }()
   );
@@ -2095,10 +2093,10 @@ var checkOutCart = function checkOutCart(userId) {
   return (
     /*#__PURE__*/
     function () {
-      var _ref10 = _asyncToGenerator(
+      var _ref9 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee6(dispatch) {
-        var _ref11, data;
+        var _ref10, data;
 
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
@@ -2109,8 +2107,8 @@ var checkOutCart = function checkOutCart(userId) {
                 return _axios.default.put("/api/checkout", userId);
 
               case 3:
-                _ref11 = _context6.sent;
-                data = _ref11.data;
+                _ref10 = _context6.sent;
+                data = _ref10.data;
                 dispatch(checkOut(data));
                 _context6.next = 11;
                 break;
@@ -2129,7 +2127,7 @@ var checkOutCart = function checkOutCart(userId) {
       }));
 
       return function (_x6) {
-        return _ref10.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       };
     }()
   );

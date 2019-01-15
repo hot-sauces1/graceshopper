@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Brown', sans-serif;
 }
 
 a {
@@ -11,8 +11,14 @@ label {
 }
 
 nav a {
-  display: inline-block;
+  display: flex;
   margin: 1em;
+  text-align: center;
+  justify-content: center;
+}
+
+img {
+  justify-content: center;
 }
 
 form div {
@@ -26,13 +32,17 @@ form div {
 
 body,
 html {
-  background-color: #f6f9fc;
+  display: flex;
+  justify-content: center;
+  background-color: white;
   font-size: 18px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
 
 h1 {
-  color: #32325d;
+  color: goldenrod;
+  text-align: center;
   font-weight: 400;
   line-height: 50px;
   font-size: 40px;
@@ -48,7 +58,7 @@ h1 {
 }
 
 label {
-  color: #6b7c93;
+  color: goldenrod;
   font-weight: 300;
   letter-spacing: 0.025em;
 }
@@ -68,7 +78,7 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.025em;
-  background-color: #6772e5;
+  background-color: goldenrod;
   text-decoration: none;
   -webkit-transition: all 150ms ease;
   transition: all 150ms ease;
@@ -84,7 +94,7 @@ form {
 button:hover {
   color: #fff;
   cursor: pointer;
-  background-color: #7795f8;
+  background-color: red;
   transform: translateY(-1px);
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
