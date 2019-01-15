@@ -20,4 +20,9 @@ OrderItem.prototype.decrease = function() {
   --this.quantity
 }
 
+OrderItem.hook('afterUpdate', async instance => {
+  if (instance.quantity <= 0) {
+    await instance.destroy()
+  }
+})
 module.exports = OrderItem
