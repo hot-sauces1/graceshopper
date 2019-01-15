@@ -6,12 +6,12 @@ router.get('/cart', async (req, res, next) => {
   try {
     let activeOrder
     //check if user is logged in as that user id
-    if (req.user.id) {
+    if (req.session) {
       activeOrder = await Order.findOne(
         {
           where: {
             isActive: true,
-            userId: req.user.id,
+            //userId: req.user.id,
             sessionId: req.sessionID
           }
         },
@@ -44,16 +44,14 @@ router.get('/cart', async (req, res, next) => {
 router.post('/cart', async (req, res, next) => {
   try {
     let addToCart
-    console.log('REQQQQQ\n\n\n\n\n\n\n\n\n\n\n\n', req.session)
-    if (req.session.userId) {
+    if (req.session) {
       addToCart = await Order.findOrCreate({
         where: {
           isActive: true,
-          userId: req.session.userId,
+          //userId: req.session.userId,
           sessionId: req.sessionID
         }
       })
-      console.log('addToCart\n\n\n\n\n\n', addToCart)
       //await addToCart.addProducts(req.body.id)
     } else {
       addToCart = await Order.findOrCreate({
@@ -62,7 +60,6 @@ router.post('/cart', async (req, res, next) => {
           sessionId: req.sessionID
         }
       })
-      console.log('addToCart\n\n\n\n\n\n', addToCart)
       //await addToCart.addProducts(req.body.id)
     }
     res.send(addToCart)

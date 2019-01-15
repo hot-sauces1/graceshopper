@@ -156,7 +156,7 @@ export default function(state = initialState, action) {
       console.log('ACTION ITEM', action.item)
       return {
         ...state,
-        cart: [...state.cart, action.item]
+        cart: [...state.cart, action.item[0]]
       }
     case REMOVE_ITEM_FROM_CART:
       return {

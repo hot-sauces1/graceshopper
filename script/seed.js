@@ -3,15 +3,15 @@
 const db = require('../server/db')
 const {User, Order, Product} = require('../server/db/models/index')
 
-// const users = require('../mock_data/users')
-// const products = require('../mock_data/products')
+const users = require('../mock_data/users')
+const products = require('../mock_data/products')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  // await Promise.all(users.map(user => User.create(user)))
-  // await Promise.all(products.map(product => Product.create(product)))
+  await Promise.all(users.map(user => User.create(user)))
+  await Promise.all(products.map(product => Product.create(product)))
 
   // await Order.create()
   // const order = await Order.findById(1)
@@ -40,7 +40,7 @@ async function seed() {
   // order.isActive = false
   // await await order.save()
 
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded users`)
   console.log(`seeded successfully`)
 }
 

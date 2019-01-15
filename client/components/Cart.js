@@ -48,12 +48,7 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(
-      'CART',
-      typeof this.props.cart.orderItems,
-      this.props.cart.orderItems
-    )
-    this.props.cart.orderItems = this.props.cart.orderItems || []
+    console.log('CART', this.props.cart, 'STATE', this.state.cart)
     return (
       <div>
         <table>
@@ -67,82 +62,84 @@ class Cart extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.cart.orderItems.map((val, inx) => {
-              return (
-                <tr key={val.id}>
-                  <td>
-                    <img
-                      src={val.image}
-                      alt={val.name}
-                      width="50px"
-                      height="50px"
-                    />
-                  </td>
-                  <td>{val.name}</td>
-                  <td>{val.price}</td>
-                  <td>
-                    Total{' '}
-                    {/* {`$${(
-                      val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))
-                    ).toFixed(2)}`} */}
-                    {val.price}
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      onChange={this.handleOnChange}
-                      placeholder={val.quantity}
-                    />
-                  </td>
-                  <td>
-                    {' '}
-                    {/* <button type="button" onClick={this.handleSubmit(val.id)}>
-                      Update
-                    </button> */}
-                    {/* <button type="button" onClick={() => this.increase(1, val)}> */}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
-                              cartItem =>
-                                cartItem.id === val.id
-                                  ? cartItem.quantity++
-                                  : cartItem
-                            )
-                          }
-                        })
-                      }
-                    >
-                      +
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
-                              cartItem =>
-                                cartItem.id === val.id
-                                  ? cartItem.quantity++
-                                  : cartItem
-                            )
-                          }
-                        })
-                      }
-                    >
-                      -
-                    </button>
-                  </td>
-                  <td>
-                    {' '}
-                    <button type="button" onClick={this.handleClick(val.id)}>
-                      &times;
-                    </button>
-                  </td>
-                </tr>
-              )
+            {this.props.cart.map((val, idx) => {
+              if (val !== null) {
+                return (
+                  <tr key={val.id}>
+                    <td>
+                      <img
+                        src={val.image}
+                        alt={val.name}
+                        width="50px"
+                        height="50px"
+                      />
+                    </td>
+                    <td>{val.name}</td>
+                    <td>{val.price}</td>
+                    <td>
+                      Total{' '}
+                      {/* {`$${(
+                        val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))
+                      ).toFixed(2)}`} */}
+                      {val.price}
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        onChange={this.handleOnChange}
+                        placeholder={val.quantity}
+                      />
+                    </td>
+                    <td>
+                      {' '}
+                      {/* <button type="button" onClick={this.handleSubmit(val.id)}>
+                        Update
+                      </button> */}
+                      {/* <button type="button" onClick={() => this.increase(1, val)}> */}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          this.setState({
+                            cart: [
+                              this.state.cart.map(
+                                cartItem =>
+                                  cartItem.id === val.id
+                                    ? cartItem.quantity++
+                                    : cartItem
+                              )
+                            ]
+                          })
+                        }
+                      >
+                        +
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          this.setState({
+                            cart: [
+                              this.state.cart.map(
+                                cartItem =>
+                                  cartItem.id === val.id
+                                    ? cartItem.quantity++
+                                    : cartItem
+                              )
+                            ]
+                          })
+                        }
+                      >
+                        -
+                      </button>
+                    </td>
+                    <td>
+                      {' '}
+                      <button type="button" onClick={this.handleClick(val.id)}>
+                        &times;
+                      </button>
+                    </td>
+                  </tr>
+                )
+              }
             })}
           </tbody>
         </table>
