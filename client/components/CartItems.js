@@ -10,7 +10,6 @@ class CartItems extends Component {
   }
 
   render() {
-    console.log('HEREs PROPS', this.props.cart)
     return (
       <table>
         <thead>

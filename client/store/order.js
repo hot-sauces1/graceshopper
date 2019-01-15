@@ -147,13 +147,11 @@ export default function(state = initialState, action) {
         singleOrder: action.singleOrder
       }
     case GOT_CART:
-      console.log('Action \n\n\n\n\n\n\n\n', action)
       return {
         ...state,
         cart: [...state.cart, action.cart]
       }
     case ADD_ITEM_TO_CART:
-      console.log('ACTION ITEM', action.item)
       return {
         ...state,
         cart: [...state.cart, action.item]
@@ -169,9 +167,6 @@ export default function(state = initialState, action) {
         cart: []
       }
     // case UPDATE_ITEM_IN_CART:
-    //   console.log('ACTION', action.item)
-    //   console.log('STATE IN REDUCER \n\n\n\n\n', state)
-    //   console.log('STATE.CART IN REDUCER \n\n\n\n\n', state.cart.orderItems)
     //   return {
     //     ...state,
     //     cart: {
