@@ -346,7 +346,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
     _this.state = {
-      cart: {}
+      cart: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.handleOnChange = this.handleOnChange.bind(this)
     // this.delete = this.delete.bind(this)
@@ -367,7 +367,7 @@ function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.props.getCart(this.props.match.params.id);
+                return this.props.getCart();
 
               case 2:
                 this.setState({
@@ -427,11 +427,10 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log('CART', _typeof(this.props.cart.orderItems), this.props.cart.orderItems);
-      this.props.cart.orderItems = this.props.cart.orderItems || [];
-      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.orderItems.map(function (val, inx) {
+      console.log("this.props\n\n\n\n", this.props);
+      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, this.props.cart.map(function (val, idx) {
         return _react.default.createElement("tr", {
-          key: val.id
+          key: idx
         }, _react.default.createElement("td", null, _react.default.createElement("img", {
           src: val.image,
           alt: val.name,
@@ -445,22 +444,18 @@ function (_Component) {
           type: "button",
           onClick: function onClick() {
             return _this4.setState({
-              cart: {
-                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
-                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
-                })
-              }
+              cart: _this4.state.cart.map(function (cartItem) {
+                return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+              })
             });
           }
         }, "+"), _react.default.createElement("button", {
           type: "button",
           onClick: function onClick() {
             return _this4.setState({
-              cart: {
-                orderItems: _this4.state.cart.orderItems.map(function (cartItem) {
-                  return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
-                })
-              }
+              cart: [_this4.state.cart.map(function (cartItem) {
+                return cartItem.id === val.id ? cartItem.quantity++ : cartItem;
+              })]
             });
           }
         }, "-")), _react.default.createElement("td", null, ' ', _react.default.createElement("button", {
@@ -484,8 +479,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getCart: function getCart(userId) {
-      return dispatch((0, _order.getCart)(userId));
+    getCart: function getCart() {
+      return dispatch((0, _order.getCart)());
     },
     updateItem: function updateItem(id) {
       return dispatch((0, _order.updateItem)(id));
@@ -2172,7 +2167,7 @@ function _default() {
     case GOT_CART:
       console.log('Action \n\n\n\n\n\n\n\n', action);
       return _objectSpread({}, state, {
-        cart: _toConsumableArray(state.cart).concat([action.cart])
+        cart: [action.cart]
       });
 
     case ADD_ITEM_TO_CART:

@@ -152,7 +152,7 @@ export default function(state = initialState, action) {
       console.log('Action \n\n\n\n\n\n\n\n', action)
       return {
         ...state,
-        cart: [...state.cart, action.cart]
+        cart: [action.cart]
       }
     case ADD_ITEM_TO_CART:
       console.log('ACTION ITEM', action.item)

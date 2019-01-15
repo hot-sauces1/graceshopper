@@ -10,7 +10,7 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cart: {}
+      cart: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     // this.handleOnChange = this.handleOnChange.bind(this)
@@ -19,7 +19,7 @@ class Cart extends Component {
     // this.decrease = this.decrease.bind(this)
   }
   async componentDidMount() {
-    await this.props.getCart(this.props.match.params.id)
+    await this.props.getCart()
     this.setState({cart: this.props.cart})
   }
 
@@ -48,12 +48,7 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(
-      'CART',
-      typeof this.props.cart.orderItems,
-      this.props.cart.orderItems
-    )
-    this.props.cart.orderItems = this.props.cart.orderItems || []
+    console.log('this.props\n\n\n\n', this.props)
     return (
       <div>
         <table>
@@ -67,9 +62,9 @@ class Cart extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.cart.orderItems.map((val, inx) => {
+            {this.props.cart.map((val, idx) => {
               return (
-                <tr key={val.id}>
+                <tr key={idx}>
                   <td>
                     <img
                       src={val.image}
@@ -104,14 +99,12 @@ class Cart extends Component {
                       type="button"
                       onClick={() =>
                         this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
-                              cartItem =>
-                                cartItem.id === val.id
-                                  ? cartItem.quantity++
-                                  : cartItem
-                            )
-                          }
+                          cart: this.state.cart.map(
+                            cartItem =>
+                              cartItem.id === val.id
+                                ? cartItem.quantity++
+                                : cartItem
+                          )
                         })
                       }
                     >
@@ -121,14 +114,14 @@ class Cart extends Component {
                       type="button"
                       onClick={() =>
                         this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
+                          cart: [
+                            this.state.cart.map(
                               cartItem =>
                                 cartItem.id === val.id
                                   ? cartItem.quantity++
                                   : cartItem
                             )
-                          }
+                          ]
                         })
                       }
                     >
@@ -160,7 +153,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: userId => dispatch(getCart(userId)),
+    getCart: () => dispatch(getCart()),
     updateItem: id => dispatch(updateItem(id)),
     removeItem: id => dispatch(id)
   }
