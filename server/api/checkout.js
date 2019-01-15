@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, OrderItem} = require('../db/models')
+const {Order} = require('../db/models')
 module.exports = router
 
 // /api/chekout
@@ -22,38 +22,27 @@ router.put('/', async (req, res, next) => {
         }
       })
     }
-    // get all products prices && quantities
-    const products = await checkedOut.getProducts()
-    // [individual prices]
 
-    const updateAction = await checkedOut.update({
-      isActive: false
-    })
+    const products = await checkedOut.getProducts()
 
     await Promise.all(
       products.map(async product => {
         try {
-          let item = await OrderItem.findOne({
-            where: {productId: product.id, orderId: req.body.id}
-          })
+          product.orderItems.price = product.price * product.orderItems.quantity
+          checkedOut.total += product.orderItems.price
 
-          let itemPrice = product.price * item.quantity
-          await item.update({price: itemPrice})
-          let total = checkedOut.total + item.price
-          await checkedOut.update({total: total})
-
-          // console.log('prod :: ', product.name)
-          // console.log('price :: ', product.price)
-          // console.log('quantity :: ', item.quantity)
-          // console.log('total price for item :: ', item.price)
-          // console.log('total price for order :: ', checkedOut.total)
+          await product.save()
+          await product.orderItems.save()
         } catch (err) {
           console.error(err)
         }
       })
     )
 
-    res.status(200).send(updateAction)
+    checkedOut.isActive = false
+    await checkedOut.save()
+
+    res.status(200).send(checkedOut)
   } catch (error) {
     next(error)
   }

@@ -1,55 +1,44 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Order, Product, OrderItem} = require('../server/db/models/index')
+const {User, Order, Product} = require('../server/db/models/index')
 
-const users = require('../mock_data/users')
-const products = require('../mock_data/products')
+// const users = require('../mock_data/users')
+// const products = require('../mock_data/products')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  await Promise.all(users.map(user => User.create(user)))
-  await Promise.all(products.map(product => Product.create(product)))
+  // await Promise.all(users.map(user => User.create(user)))
+  // await Promise.all(products.map(product => Product.create(product)))
 
-  await Order.create()
-  const order = await Order.findById(1)
-  let allProducts = await Product.findAll()
-  const user1 = await User.findById(1)
+  // await Order.create()
+  // const order = await Order.findById(1)
+  // let allProducts = await Product.findAll()
+  // const user1 = await User.findById(1)
 
-  await order.setUser(user1)
-  await order.addProducts([...allProducts])
+  // await order.setUser(user1)
+  // await order.addProducts([...allProducts])
 
-  const checkout = await order.getProducts()
-
-  // console.log(Object.values(checkout))
-  // checkout.forEach(v => {
-  //   console.log(v.name)
-  // })
+  // const checkout = await order.getProducts()
 
   // await Promise.all(
   //   checkout.map(async product => {
   //     try {
-  //       let item = await OrderItem.findOne({
-  //         where: {productId: product.id, orderId: order.id}
-  //       })
+  //       product.orderItems.price = product.price * product.orderItems.quantity
+  //       order.total += product.orderItems.price
 
-  //       let itemPrice = product.price * item.quantity
-  //       await item.update({price: itemPrice})
-  //       let total = order.total + item.price
-  //       await order.update({total: total})
-
-  //       console.log('prod :: ', product.name)
-  //       console.log('price :: ', product.price)
-  //       console.log('quantity :: ', item.quantity)
-  //       console.log('total price for item :: ', item.price)
-  //       console.log('total price for order :: ', order.total)
+  //       await product.save()
+  //       await product.orderItems.save()
   //     } catch (err) {
   //       console.error(err)
   //     }
   //   })
   // )
+
+  // order.isActive = false
+  // await await order.save()
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
