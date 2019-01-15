@@ -120,12 +120,12 @@ export default function(state = initialState, action) {
     case GOT_CART:
       return {
         ...state,
-        cart: [...state.cart, action.cart]
+        cart: [action.cart]
       }
     case ADD_ITEM_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, action.item]
+        cart: [...state.cart, action.item[0]]
       }
     case REMOVE_ITEM_FROM_CART:
       return {

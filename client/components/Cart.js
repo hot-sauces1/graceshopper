@@ -10,14 +10,14 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cart: {}
+      cart: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.increase = this.increase.bind(this)
     // this.decrease = this.decrease.bind(this)
   }
   async componentDidMount() {
-    await this.props.getCart(this.props.match.params.id)
+    await this.props.getCart()
     this.setState({cart: this.props.cart})
   }
 
@@ -42,7 +42,7 @@ class Cart extends Component {
   }
 
   render() {
-    this.props.cart.orderItems = this.props.cart.orderItems || []
+    const cart = this.props.cart || []
     return (
       <div>
         <table>
@@ -56,51 +56,39 @@ class Cart extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.cart.orderItems.map((val, inx) => {
+            {cart.map((val, idx) => {
+              const product = val
               return (
-                <tr key={val.id}>
+                <tr key={idx}>
                   <td>
                     <img
-                      src={val.image}
-                      alt={val.name}
+                      src={product.products[0].image}
+                      alt={product.products[0].name}
                       width="50px"
                       height="50px"
                     />
                   </td>
-                  <td>{val.name}</td>
-                  <td>{val.price}</td>
-                  <td>
-                    Total{' '}
-                    {/* {`$${(
-                      val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))
-                    ).toFixed(2)}`} */}
-                    {val.price}
-                  </td>
+                  <td>{product.products[0].name}</td>
+                  <td>{product.products[0].price}</td>
+                  <td>Total {product.products[0].price}</td>
                   <td>
                     <input
                       type="text"
                       onChange={this.handleOnChange}
-                      placeholder={val.quantity}
+                      placeholder={1}
                     />
                   </td>
                   <td>
-                    {' '}
-                    {/* <button type="button" onClick={this.handleSubmit(val.id)}>
-                      Update
-                    </button> */}
-                    {/* <button type="button" onClick={() => this.increase(1, val)}> */}
                     <button
                       type="button"
                       onClick={() =>
                         this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
-                              cartItem =>
-                                cartItem.id === val.id
-                                  ? cartItem.quantity++
-                                  : cartItem
-                            )
-                          }
+                          cart: this.state.cart.map(
+                            cartItem =>
+                              cartItem.id === val.id
+                                ? cartItem.quantity++
+                                : cartItem
+                          )
                         })
                       }
                     >
@@ -110,14 +98,14 @@ class Cart extends Component {
                       type="button"
                       onClick={() =>
                         this.setState({
-                          cart: {
-                            orderItems: this.state.cart.orderItems.map(
+                          cart: [
+                            this.state.cart.map(
                               cartItem =>
                                 cartItem.id === val.id
                                   ? cartItem.quantity++
                                   : cartItem
                             )
-                          }
+                          ]
                         })
                       }
                     >
@@ -149,7 +137,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: userId => dispatch(getCart(userId)),
+    getCart: () => dispatch(getCart()),
     updateItem: id => dispatch(updateItem(id)),
     removeItem: id => dispatch(id)
   }
