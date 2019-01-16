@@ -56,62 +56,67 @@ class Cart extends Component {
           </thead>
           <tbody>
             {cart.map((val, idx) => {
-              // const val = val
-              return (
-                <tr key={idx}>
-                  <td>
-                    <img
-                      src={val.products[0].image}
-                      alt={val.products[0].name}
-                      width="50px"
-                      height="50px"
-                    />
-                  </td>
-                  <td>{val.products[0].name}</td>
-                  <td>{val.products[0].price / 100}</td>
-                  <td>1</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        this.setState({
-                          cart: this.state.cart.map(
-                            cartItem =>
-                              cartItem.id === val.id
-                                ? cartItem.quantity++
-                                : cartItem
-                          )
-                        })
-                      }
-                    >
-                      +
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        this.setState({
-                          cart: [
-                            this.state.cart.map(
+              if (val.products && val.products.length) {
+                return (
+                  <tr key={val.products[0].id}>
+                    <td>
+                      <img
+                        src={val.products[0].image}
+                        alt={val.products[0].name}
+                        width="50px"
+                        height="50px"
+                      />
+                    </td>
+                    <td>{val.products[0].name}</td>
+                    <td>${val.products[0].price / 100}</td>
+                    <td>1</td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          this.setState({
+                            cart: this.state.cart.map(
                               cartItem =>
                                 cartItem.id === val.id
                                   ? cartItem.quantity++
                                   : cartItem
                             )
-                          ]
-                        })
-                      }
-                    >
-                      -
-                    </button>
-                  </td>
-                  <td>
-                    {' '}
-                    <button type="button" onClick={this.handleClick(val.id)}>
-                      &times;
-                    </button>
-                  </td>
-                </tr>
-              )
+                          })
+                        }
+                      >
+                        +
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          this.setState({
+                            cart: [
+                              this.state.cart.map(
+                                cartItem =>
+                                  cartItem.id === val.id
+                                    ? cartItem.quantity++
+                                    : cartItem
+                              )
+                            ]
+                          })
+                        }
+                      >
+                        -
+                      </button>
+                    </td>
+                    <td>
+                      {' '}
+                      <button type="button" onClick={this.handleClick(val.id)}>
+                        &times;
+                      </button>
+                    </td>
+                  </tr>
+                )
+              } else {
+                // return(
+                //   <tr>Your cart is empty! Go fill it up!</tr>
+                // )
+              }
             })}
           </tbody>
         </table>

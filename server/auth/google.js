@@ -27,6 +27,7 @@ const strategy = new GoogleStrategy(
       const googleId = profile.id
       const {name} = profile
       const email = profile.emails[0].value
+      console.log(googleId, name, email)
       const user = await User.findOrCreate({
         where: {
           googleId,
