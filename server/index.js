@@ -30,7 +30,9 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
 
 passport.deserializeUser(async (id, done) => {
   try {
@@ -58,7 +60,7 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: true,
       genid: function(req) {
         const a = uuidv4()
         const b = a.replace(/[^a-z0-9]/gi, '')
