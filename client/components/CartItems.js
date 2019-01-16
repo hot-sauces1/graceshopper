@@ -35,7 +35,7 @@ class CartItems extends Component {
                   />
                 </td>
                 <td>{val.name}</td>
-                <td>{val.price}</td>
+                <td>{val.price / 100}</td>
                 <td>
                   Total{' '}
                   {`$${(

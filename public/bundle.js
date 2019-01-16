@@ -253,7 +253,7 @@ function (_Component) {
           onClick: function onClick() {
             return _this2.handleClick(val.id);
           }
-        }, val.price));
+        }, "$", val.price / 100));
       }))));
     }
   }]);
@@ -420,7 +420,7 @@ function (_Component) {
       var _this4 = this;
 
       var cart = this.state.cart || [];
-      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Total Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, cart.map(function (val, idx) {
+      return _react.default.createElement("div", null, _react.default.createElement("table", null, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Image"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Price"), _react.default.createElement("th", null, "Quantity"))), _react.default.createElement("tbody", null, cart.map(function (val, idx) {
         // const val = val
         return _react.default.createElement("tr", {
           key: idx
@@ -429,11 +429,7 @@ function (_Component) {
           alt: val.products[0].name,
           width: "50px",
           height: "50px"
-        })), _react.default.createElement("td", null, val.products[0].name), _react.default.createElement("td", null, val.products[0].price), _react.default.createElement("td", null, "Total ", val.products[0].price), _react.default.createElement("td", null, _react.default.createElement("input", {
-          type: "text",
-          onChange: _this4.handleOnChange,
-          placeholder: 1
-        })), _react.default.createElement("td", null, _react.default.createElement("button", {
+        })), _react.default.createElement("td", null, val.products[0].name), _react.default.createElement("td", null, val.products[0].price / 100), _react.default.createElement("td", null, "1"), _react.default.createElement("td", null, _react.default.createElement("button", {
           type: "button",
           onClick: function onClick() {
             return _this4.setState({
@@ -456,6 +452,7 @@ function (_Component) {
           onClick: _this4.handleClick(val.id)
         }, "\xD7")));
       }))), _react.default.createElement(_reactRouterDom.Link, {
+        className: "link",
         to: "/checkout"
       }, "Checkout"));
     }
@@ -580,7 +577,7 @@ function (_Component) {
           alt: val.name,
           width: "50px",
           height: "50px"
-        })), _react.default.createElement("td", null, val.name), _react.default.createElement("td", null, val.price), _react.default.createElement("td", null, "Total", ' ', "$".concat((val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))).toFixed(2))));
+        })), _react.default.createElement("td", null, val.name), _react.default.createElement("td", null, val.price / 100), _react.default.createElement("td", null, "Total", ' ', "$".concat((val.quantity * Number(val.price.replace(/[^0-9.-]+/g, ''))).toFixed(2))));
       })));
     }
   }]);
@@ -832,6 +829,7 @@ function (_Component) {
           cart = _ref2.cart;
 
       return _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("form", {
+        className: "form",
         onSubmit: this.handleSubmit
       }, _react.default.createElement("h3", null, "Billing"), _react.default.createElement("label", null, "First Name"), _react.default.createElement("input", {
         required: true,
@@ -1059,7 +1057,7 @@ function (_Component) {
         alt: singleProduct.name,
         width: "300px",
         height: "400px"
-      }), _react.default.createElement("h3", null, "$", singleProduct.price), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
+      }), _react.default.createElement("h3", null, "$", singleProduct.price / 100), _react.default.createElement("p", null, singleProduct.description), _react.default.createElement("button", {
         type: "submit",
         onClick: function onClick() {
           return _this2.handleSubmit(_this2.props);
@@ -1313,20 +1311,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Navbar = function Navbar(_ref) {
   var handleClick = _ref.handleClick,
       isLoggedIn = _ref.isLoggedIn;
-  return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Welcome to the Hot Sauce Store!"), _react.default.createElement("nav", null, _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+  return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Welcome to Grace's Slammin Sauces!"), _react.default.createElement("nav", null, _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/home"
   }, "Home"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/products"
   }, "Products"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/cart"
   }, "Cart")), isLoggedIn ? _react.default.createElement("div", null, _react.default.createElement("a", {
+    className: "link",
     href: "#",
     onClick: handleClick
   }, "Logout"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/order-history"
   }, "Order History")) : _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/login"
   }, "Login"), _react.default.createElement(_reactRouterDom.Link, {
+    className: "link",
     to: "/signup"
   }, "Sign Up"))), _react.default.createElement("hr", null));
 };
