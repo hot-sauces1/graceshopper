@@ -28,7 +28,7 @@ class SingleItem extends Component {
           width="300px"
           height="400px"
         />
-        <h3>${singleProduct.price}</h3>
+        <h3>${singleProduct.price / 100}</h3>
         <p>{singleProduct.description}</p>
         <button type="submit" onClick={() => this.handleSubmit(this.props)}>
           Add To Cart

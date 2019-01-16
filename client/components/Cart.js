@@ -51,7 +51,6 @@ class Cart extends Component {
               <th>Image</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Total Price</th>
               <th>Quantity</th>
             </tr>
           </thead>
@@ -69,15 +68,8 @@ class Cart extends Component {
                     />
                   </td>
                   <td>{val.products[0].name}</td>
-                  <td>{val.products[0].price}</td>
-                  <td>Total {val.products[0].price}</td>
-                  <td>
-                    <input
-                      type="text"
-                      onChange={this.handleOnChange}
-                      placeholder={1}
-                    />
-                  </td>
+                  <td>{val.products[0].price / 100}</td>
+                  <td>1</td>
                   <td>
                     <button
                       type="button"
@@ -123,7 +115,9 @@ class Cart extends Component {
             })}
           </tbody>
         </table>
-        <Link to="/checkout">Checkout</Link>
+        <Link className="link" to="/checkout">
+          Checkout
+        </Link>
       </div>
     )
   }

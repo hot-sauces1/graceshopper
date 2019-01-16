@@ -50,7 +50,9 @@ class AllProducts extends Component {
                     />
                   </td>
                   <td onClick={() => this.handleClick(val.id)}>{val.name}</td>
-                  <td onClick={() => this.handleClick(val.id)}>{val.price}</td>
+                  <td onClick={() => this.handleClick(val.id)}>
+                    ${val.price / 100}
+                  </td>
                 </tr>
               )
             })}

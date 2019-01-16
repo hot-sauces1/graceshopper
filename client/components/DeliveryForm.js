@@ -52,7 +52,7 @@ class DeliveryForm extends Component {
     return (
       <div>
         <div>
-          <form onSubmit={this.handleSubmit}>
+          <form className="form" onSubmit={this.handleSubmit}>
             <h3>Billing</h3>
             <label>First Name</label>
             <input
